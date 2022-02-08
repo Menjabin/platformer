@@ -2,10 +2,13 @@ package com.example;
 
 import java.io.IOException;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class App {
     GameManager gameManager;
 
-    // The App constructor will create the window
+    // Create a new GameManager, which will start the game
     App() throws IOException {
         gameManager = new GameManager();
     }
@@ -16,8 +19,15 @@ public class App {
     }
 
     public void gameLoop() throws InterruptedException {
-        while (true) {
-            gameManager.update();
-        }
+        // The gameloop will call the appropriate methods of gameManager
+        Timer gameTimer = new Timer();
+        gameTimer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                gameManager.update();
+                
+            }  
+        }, 0, 17);
     }
 }

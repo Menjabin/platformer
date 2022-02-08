@@ -21,12 +21,7 @@ public class KeyboardListener implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            try {
-                player.jump();
-            } catch (InterruptedException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
+            player.jump();
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             player.move(-player.getSpeed(), 0);
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {

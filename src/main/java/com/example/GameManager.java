@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class GameManager {
-    // Dimensions of game window
+    // Dimensions of the game window
     final int WIDTH = 800;
     final int HEIGHT = 600;
 
@@ -18,6 +18,7 @@ public class GameManager {
     Canvas canvas;
     Player player;
 
+    // Handling lag
     private long prevTime = System.nanoTime();
     private int deltaTime;
 
@@ -34,7 +35,7 @@ public class GameManager {
         player = new Player(new Position(50, 300));
         panel.add(player.getPlayer());
 
-        UI ui = new UI();
+        //UI ui = new UI();
         //panel.add(ui.getHeart());
 
         // Add a canvas to the panel
@@ -58,10 +59,7 @@ public class GameManager {
     }
 
     public void update() {
-        // Calculate dt
-        long currentTime = System.nanoTime();
-        deltaTime = (int) ((currentTime - prevTime) / 1000000);
-        prevTime = currentTime;
+        player.nextStep();
         // processInput
         // render
     }

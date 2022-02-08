@@ -18,10 +18,18 @@ public class Player {
 
     private int speed = 10;
 
+    private int startY;
+    private int gravity = 2;
+    private int jumpSpeed = 30;
+
     Player(Position startPos) throws IOException {
-        BufferedImage img = ImageIO.read(new File("/Users/benjamin/Documents/Programmering/Platformer/platformer/src/main/java/com/example/player.png"));
+        String path = System.getProperty("user.dir");
+        path += "\\src\\main\\java\\com\\example\\";
+        System.out.println(path);
+        BufferedImage img = ImageIO.read(new File(path + "player.png"));
         player = new JLabel(new ImageIcon(img));
         position = startPos;
+        startY = position.getY();
         player.setBounds(position.getX(), position.getY(), position.getX() + width, position.getY() + height);
     }
 
@@ -42,25 +50,20 @@ public class Player {
         player.setBounds(position.getX(), position.getY(), position.getX() + width, position.getY() + height);
     }
 
-    public void jump() throws InterruptedException {
-        isJumping = true;
-        int gravity = 2;
-        int jumpSpeed = 15;
-        int startY = position.getY();
-        
-        while (isJumping) {
+    public void nextStep() {        
+        if (isJumping) {
             move(0, -jumpSpeed);
             jumpSpeed -= gravity;
 
-            if (position.getY() == startY) {
+            if (position.getY() >= startY) {
+                position.setY(startY);
                 isJumping = false;
-            } else {
-                Thread.sleep(50);
             }
         }
+        System.out.println(position.getX() + ", " + position.getY());
+    }
 
-        Timer timer = new Timer(jumpSpeed, null);
-        timer.setInitialDelay(jumpSpeed);
-        timer.start();
+    public void jump() {
+        isJumping = true;
     }
 }
