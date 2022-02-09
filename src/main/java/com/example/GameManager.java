@@ -1,12 +1,8 @@
 package com.example;
 
-import java.awt.image.BufferedImage;
 import java.awt.*;
-import java.awt.event.*;
-import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class GameManager {
@@ -17,10 +13,6 @@ public class GameManager {
     JFrame frame;
     Canvas canvas;
     Player player;
-
-    // Handling lag
-    private long prevTime = System.nanoTime();
-    private int deltaTime;
 
     GameManager() throws IOException {
         // The main window
@@ -62,9 +54,5 @@ public class GameManager {
         player.move();
         // processInput
         // render
-    }
-
-    public int getDeltaTime() {
-        return deltaTime;
     }
 }
