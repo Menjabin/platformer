@@ -3,7 +3,6 @@ package com.example;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,16 +11,11 @@ public class Player extends PhysicsObject {
     public Boolean isJumping = false;
 
     private JLabel player;
-    private Vector2D position;
 
     private int width = 70;
     private int height = 74;
 
-    private Vector2D speed;
-
     private int startY;
-    private int gravity = 2;
-    private int jumpSpeed = 30;
 
     Player(Vector2D startPos) throws IOException {
         String path = System.getProperty("user.dir");
@@ -31,11 +25,15 @@ public class Player extends PhysicsObject {
         player = new JLabel(new ImageIcon(img));
         position = startPos;
         startY = position.getY();
+
+        momentum = new Vector2D();
+        gravity = 2;
+
         player.setBounds(position.getX(), position.getY(), position.getX() + width, position.getY() + height);
     }
 
-    public Vector2D getSpeed() {
-        return speed;
+    public Vector2D getmomentum() {
+        return momentum;
     }
 
     public JLabel getPlayer() {
@@ -47,27 +45,34 @@ public class Player extends PhysicsObject {
     }
 
     public void move() {
-        addMomentum(10, 10);
+        position.translate(momentum.getX(), momentum.getY());
 
+        // Process momentum in x-direction
+        if (momentum.getX() > 0) {
+            momentum.translate(-1, 0);
+        } else if (momentum.getX() < 0) {
+            momentum.translate(1, 0);
+        }
 
+        // Process momentum in y-direction
+        if (isJumping) {
+            momentum.translate(0, gravity);
+
+            if (position.getY() >= startY) {
+                position.setY(startY);
+                momentum.setY(0);
+                isJumping = false;
+            }
+        }
 
         player.setBounds(position.getX(), position.getY(), position.getX() + width, position.getY() + height);
     }
 
-    public void nextStep() {        
-        if (isJumping) {
-            addMomentum(0, -jumpSpeed);
-            jumpSpeed -= gravity;
-
-            if (position.getY() >= startY) {
-                position.setY(startY);
-                isJumping = false;
-            }
-        }
-        System.out.println(position.getX() + ", " + position.getY());
-    }
-
     public void jump() {
+        if (!isJumping) {
+            setMomentum(0, -20);
+        }
+
         isJumping = true;
     }
 }

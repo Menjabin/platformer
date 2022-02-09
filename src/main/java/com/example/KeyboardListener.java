@@ -16,9 +16,9 @@ public class KeyboardListener implements KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             player.jump();
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            player.addMomentum(-10, 0);
+            player.setMomentum(-10, 0);
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            player.addMomentum(0, 10);
+            player.setMomentum(10, 0);
         }
     }
     
