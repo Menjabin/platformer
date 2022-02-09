@@ -16,6 +16,8 @@ public class Player extends PhysicsObject {
     private int height = 74;
 
     private int startY;
+    private Boolean keyLeft = false;
+    private Boolean keyRight = false;
 
     Player(Vector2D startPos) throws IOException {
         String path = System.getProperty("user.dir");
@@ -32,6 +34,14 @@ public class Player extends PhysicsObject {
         player.setBounds(position.getX(), position.getY(), position.getX() + width, position.getY() + height);
     }
 
+    public void setKeyLeft(Boolean value) {
+        keyLeft = value;
+    }
+
+    public void setKeyRight(Boolean value) {
+        keyRight = value;
+    }
+
     public Vector2D getmomentum() {
         return momentum;
     }
@@ -45,14 +55,23 @@ public class Player extends PhysicsObject {
     }
 
     public void move() {
-        position.translate(momentum.getX(), momentum.getY());
-
-        // Process momentum in x-direction
-        if (momentum.getX() > 0) {
-            momentum.translate(-1, 0);
-        } else if (momentum.getX() < 0) {
-            momentum.translate(1, 0);
+        // Add momentum to the player
+        if (keyLeft && keyRight) {
+            momentum.setX(0);
+        } else if (keyLeft) {
+            momentum.setX(-10);
+        } else if (keyRight) {
+            momentum.setX(10);
+        } else {
+            // Decrease the momentum whenever no keys are pressed
+            if (momentum.getX() > 0) {
+                momentum.translate(-1, 0);
+            } else if (momentum.getX() < 0) {
+                momentum.translate(1, 0);
+            }
         }
+
+        position.translate(momentum.getX(), momentum.getY());
 
         // Process momentum in y-direction
         if (isJumping) {
@@ -70,7 +89,7 @@ public class Player extends PhysicsObject {
 
     public void jump() {
         if (!isJumping) {
-            setMomentum(0, -20);
+            setMomentumY(-20);
         }
 
         isJumping = true;

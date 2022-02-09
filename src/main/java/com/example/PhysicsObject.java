@@ -14,4 +14,12 @@ public class PhysicsObject {
     public void addMomentum(int xMomentum, int yMomentum) {
         momentum.translate(xMomentum, yMomentum);
     }
+
+    public void setMomentumX(int xMomentum) {
+        momentum.setX(xMomentum);
+    }
+
+    public void setMomentumY(int yMomentum) {
+        momentum.setY(yMomentum);
+    }
 }
