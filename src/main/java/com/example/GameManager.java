@@ -32,7 +32,7 @@ public class GameManager {
         panel.setLayout(null);
 
         // Load image and add it to the panel
-        player = new Player(new Position(50, 300));
+        player = new Player(new Vector2D(50, 300));
         panel.add(player.getPlayer());
 
         //UI ui = new UI();
@@ -59,7 +59,7 @@ public class GameManager {
     }
 
     public void update() {
-        player.nextStep();
+        player.move();
         // processInput
         // render
     }
