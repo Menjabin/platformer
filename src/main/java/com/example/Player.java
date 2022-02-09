@@ -12,6 +12,8 @@ public class Player extends PhysicsObject {
 
     private JLabel player;
 
+    private Rectangle hitBox;
+
     private int width = 70;
     private int height = 74;
 
@@ -30,6 +32,7 @@ public class Player extends PhysicsObject {
 
         momentum = new Vector2D();
         gravity = 2;
+        hitBox = new Rectangle(startPos, 70, 74);
 
         player.setBounds(position.getX(), position.getY(), position.getX() + width, position.getY() + height);
     }
