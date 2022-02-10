@@ -7,7 +7,14 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class Player extends PhysicsObject {
+public class Player implements IPhysicsObject {
+
+    private Vector2D momentum;
+    private Vector2D position;
+
+    private int gravity;
+
+
     public Boolean isJumping = false;
 
     private JLabel player;
@@ -59,7 +66,7 @@ public class Player extends PhysicsObject {
 
     public void jump() {
         if (!isJumping) {
-            setMomentumY(-40);
+            momentum.setY(-40);
         }
 
         isJumping = true;
@@ -69,7 +76,7 @@ public class Player extends PhysicsObject {
         if (hitBox.isColliding(other)) {
             isJumping = false;
             position.setY(other.getPosition().getY() - height);
-            setMomentumY(0);
+            momentum.setY(0);
         } else {
             momentum.translate(0, gravity);
         }
