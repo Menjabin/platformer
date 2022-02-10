@@ -21,7 +21,7 @@ public class Ground {
 
     Ground(Vector2D position) throws IOException {
         this.position = position;
-        this.hitBox = new Rectangle(new Vector2D(position.getX(), position.getY() + offsetY), width, height - offsetY);
+        this.hitBox = new Rectangle(new Vector2D(this.position.getX(), this.position.getY() + offsetY), width, height - offsetY);
 
         String path = System.getProperty("user.dir");
         path += "\\src\\main\\java\\com\\example\\";
@@ -29,7 +29,7 @@ public class Ground {
         BufferedImage img = ImageIO.read(new File(path + "ground.png"));
         ground = new JLabel(new ImageIcon(img));
 
-        ground.setBounds(position.getX(), position.getY(), width, height);
+        ground.setBounds(this.position.getX(), this.position.getY(), width, height);
     }
 
     public JLabel getGround() {
@@ -38,5 +38,9 @@ public class Ground {
 
     public Rectangle getHitBox() {
         return hitBox;
+    }
+
+    public void setPosition(Vector2D position) {
+        this.position = position;
     }
 }

@@ -8,11 +8,15 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Player implements IPhysicsObject {
+    // Width and height of the player
+    private final int WIDTH = 70;
+    private final int HEIGHT = 74;
 
-    private Vector2D momentum;
+    // 
     private Vector2D position;
+    private Vector2D momentum;
 
-    private int gravity;
+    private final int GRAVITY;
 
     public Boolean isJumping = false;
 
@@ -20,11 +24,10 @@ public class Player implements IPhysicsObject {
 
     private Rectangle hitBox;
 
-    private int width = 70;
-    private int height = 74;
 
-    private Boolean keyLeft = false;
-    private Boolean keyRight = false;
+
+    private Boolean keyLeft;
+    private Boolean keyRight;
 
     Player(Vector2D startPos) throws IOException {
         String path = System.getProperty("user.dir");
@@ -35,10 +38,10 @@ public class Player implements IPhysicsObject {
         position = startPos;
 
         momentum = new Vector2D();
-        gravity = 2;
-        hitBox = new Rectangle(startPos, width, height);
+        GRAVITY = 2;
+        hitBox = new Rectangle(startPos, WIDTH, HEIGHT);
 
-        player.setBounds(position.getX(), position.getY(), width, height);
+        player.setBounds(position.getX(), position.getY(), WIDTH, HEIGHT);
     }
 
     public void move() {
@@ -60,7 +63,7 @@ public class Player implements IPhysicsObject {
 
         position.translate(momentum.getX(), momentum.getY());
 
-        player.setBounds(position.getX(), position.getY(), width, height);
+        player.setBounds(position.getX(), position.getY(), WIDTH, HEIGHT);
     }
 
     public void jump() {
@@ -79,13 +82,13 @@ public class Player implements IPhysicsObject {
                 isColliding = true;
 
                 isJumping = false;
-                position.setY(other.getHitBox().getPosition().getY() - height);
+                position.setY(other.getHitBox().getPosition().getY() - HEIGHT);
                 momentum.setY(0);
             }
         }
 
         if (!isColliding) {
-            momentum.translate(0, gravity);
+            momentum.translate(0, GRAVITY);
         }
     }
 

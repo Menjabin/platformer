@@ -4,11 +4,11 @@ import java.awt.event.*;
 
 public class KeyboardListener implements KeyListener {
     private Player player;
-    private GameManager gameManager;
+    //private GameManager gameManager;
 
     KeyboardListener(Player player, GameManager gameManager) {
         this.player = player;
-        this.gameManager = gameManager;
+        //this.gameManager = gameManager;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class KeyboardListener implements KeyListener {
     
     @Override
     public void keyTyped(KeyEvent e) {
-        // TODO Auto-generated method stub
+
     }
 
     @Override

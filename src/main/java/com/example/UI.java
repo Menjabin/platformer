@@ -1,8 +1,6 @@
 package com.example;
 
 import java.awt.image.BufferedImage;
-import java.awt.*;
-import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 

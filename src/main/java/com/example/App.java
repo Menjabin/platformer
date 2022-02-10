@@ -6,6 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class App {
+    // The game manager controls everything. This class just starts the program
     GameManager gameManager;
 
     // Create a new GameManager, which will start the game
