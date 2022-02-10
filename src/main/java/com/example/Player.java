@@ -17,7 +17,6 @@ public class Player extends PhysicsObject {
     private int width = 70;
     private int height = 74;
 
-    private int startY;
     private Boolean keyLeft = false;
     private Boolean keyRight = false;
 
@@ -28,33 +27,12 @@ public class Player extends PhysicsObject {
         BufferedImage img = ImageIO.read(new File(path + "player.png"));
         player = new JLabel(new ImageIcon(img));
         position = startPos;
-        startY = position.getY();
 
         momentum = new Vector2D();
         gravity = 2;
-        hitBox = new Rectangle(startPos, 70, 74);
+        hitBox = new Rectangle(startPos, width, height);
 
-        player.setBounds(position.getX(), position.getY(), position.getX() + width, position.getY() + height);
-    }
-
-    public void setKeyLeft(Boolean value) {
-        keyLeft = value;
-    }
-
-    public void setKeyRight(Boolean value) {
-        keyRight = value;
-    }
-
-    public Vector2D getmomentum() {
-        return momentum;
-    }
-
-    public JLabel getPlayer() {
-        return player;
-    }
-
-    public Vector2D getPosition() {
-        return position;
+        player.setBounds(position.getX(), position.getY(), width, height);
     }
 
     public void move() {
@@ -76,25 +54,46 @@ public class Player extends PhysicsObject {
 
         position.translate(momentum.getX(), momentum.getY());
 
-        // Process momentum in y-direction
-        if (isJumping) {
-            momentum.translate(0, gravity);
-
-            if (position.getY() >= startY) {
-                position.setY(startY);
-                momentum.setY(0);
-                isJumping = false;
-            }
-        }
-
-        player.setBounds(position.getX(), position.getY(), position.getX() + width, position.getY() + height);
+        player.setBounds(position.getX(), position.getY(), width, height);
     }
 
     public void jump() {
         if (!isJumping) {
-            setMomentumY(-20);
+            setMomentumY(-40);
         }
 
         isJumping = true;
+    }
+
+    public void checkCollision(Rectangle other) {
+        if (hitBox.isColliding(other)) {
+            isJumping = false;
+            position.setY(other.getPosition().getY() - height);
+            setMomentumY(0);
+        } else {
+            momentum.translate(0, gravity);
+        }
+    }
+
+    // Getters and setters
+
+    public void setKeyLeft(Boolean value) {
+        keyLeft = value;
+    }
+
+    public void setKeyRight(Boolean value) {
+        keyRight = value;
+    }
+
+    public Vector2D getmomentum() {
+        return momentum;
+    }
+
+    public JLabel getPlayer() {
+        return player;
+    }
+
+    public Vector2D getPosition() {
+        return position;
     }
 }
