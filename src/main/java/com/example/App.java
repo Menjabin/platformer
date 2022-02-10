@@ -14,18 +14,19 @@ public class App {
         gameManager = new GameManager();
     }
 
-    public static void main( String[] args ) throws IOException, InterruptedException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         App app = new App();
         app.gameLoop();
     }
 
     public void gameLoop() throws InterruptedException {
-        // The gameloop will call the appropriate methods of gameManager
+        // Run the game at 60 fps
         Timer gameTimer = new Timer();
         gameTimer.schedule(new TimerTask() {
 
             @Override
             public void run() {
+                // Update the state of the game every frame
                 gameManager.update();
             }  
         }, 0, 17);

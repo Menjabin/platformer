@@ -24,8 +24,7 @@ public class Player implements IPhysicsObject {
 
     private Rectangle hitBox;
 
-
-
+    // Keep track of input
     private Boolean keyLeft;
     private Boolean keyRight;
 
@@ -36,6 +35,8 @@ public class Player implements IPhysicsObject {
         BufferedImage img = ImageIO.read(new File(path + "player.png"));
         player = new JLabel(new ImageIcon(img));
         position = startPos;
+
+        keyLeft = keyRight = false;
 
         momentum = new Vector2D();
         GRAVITY = 2;
