@@ -1,24 +1,21 @@
 package com.example;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.io.IOException;
 
 import javax.swing.*;
-import javax.swing.event.MouseInputListener;
 
 public class GameManager {
     // Dimensions of the game window
     final int WIDTH = 800;
     final int HEIGHT = 600;
 
+
     JFrame frame;
     Canvas canvas;
     Player player;
 
-    Ground ground;
-    Ground ground1;
+    Ground[] grounds;
 
     GameManager() throws IOException {
         // The main window
@@ -29,16 +26,19 @@ public class GameManager {
         panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         panel.setLayout(null);
 
+        panel.setBackground(new Color(173, 216, 230));
+
         // Load image and add it to the panel
         player = new Player(new Vector2D(0, 0));
         panel.add(player.getPlayer());
 
         // Load ground and add it to the panel
-        ground = new Ground(new Vector2D(0, 400));
-        panel.add(ground.getGround());
+        grounds = new Ground[2];
+        grounds[0] = new Ground(new Vector2D(0, 400));
+        grounds[1] = new Ground(new Vector2D(400, 300));
 
-        ground1 = new Ground(new Vector2D(400, 300));
-        panel.add(ground.getGround());
+        panel.add(grounds[0].getGround());
+        panel.add(grounds[1].getGround());
 
         //UI ui = new UI();
         //panel.add(ui.getHeart());
@@ -80,8 +80,7 @@ public class GameManager {
 
     public void update() {
         player.move();
-        player.checkCollision(ground.getHitBox());
-        player.checkCollision(ground1.getHitBox());
+        player.checkCollision(grounds);
         // render
     }
 }

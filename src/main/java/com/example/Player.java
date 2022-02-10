@@ -14,7 +14,6 @@ public class Player implements IPhysicsObject {
 
     private int gravity;
 
-
     public Boolean isJumping = false;
 
     private JLabel player;
@@ -66,18 +65,26 @@ public class Player implements IPhysicsObject {
 
     public void jump() {
         if (!isJumping) {
-            momentum.setY(-40);
+            momentum.setY(-30);
         }
 
         isJumping = true;
     }
 
-    public void checkCollision(Rectangle other) {
-        if (hitBox.isColliding(other)) {
-            isJumping = false;
-            position.setY(other.getPosition().getY() - height);
-            momentum.setY(0);
-        } else {
+    public void checkCollision(Ground[] grounds) {
+        Boolean isColliding = false;
+
+        for (Ground other : grounds) {
+            if (hitBox.isColliding(other.getHitBox())) {
+                isColliding = true;
+
+                isJumping = false;
+                position.setY(other.getHitBox().getPosition().getY() - height);
+                momentum.setY(0);
+            }
+        }
+
+        if (!isColliding) {
             momentum.translate(0, gravity);
         }
     }
