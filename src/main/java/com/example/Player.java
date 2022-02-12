@@ -2,31 +2,25 @@ package com.example;
 
 public class Player extends Sprite implements IPhysicsObject {
     // Width and height of the player
-    private final int WIDTH = 70;
-    private final int HEIGHT = 74;
+    public static final int WIDTH = 70;
+    public static final int HEIGHT = 74;
 
-    private final int GRAVITY;
+    public final int GRAVITY = 2;
 
-    public Boolean isJumping = false;
-
-    private Rectangle hitBox;
+    private Boolean isFalling;
+    private Vector2D momentum;
 
     // Keep track of input
     private Boolean keyLeft;
     private Boolean keyRight;
 
     Player(Vector2D startPos, String assetName) {
-        super(assetName);
-
-        position = startPos;
+        super(startPos, WIDTH, HEIGHT, assetName);
 
         keyLeft = keyRight = false;
+        isFalling = true;
 
         momentum = new Vector2D();
-        GRAVITY = 2;
-        hitBox = new Rectangle(startPos, WIDTH, HEIGHT);
-
-        image.setBounds(position.getX(), position.getY(), WIDTH, HEIGHT);
     }
 
     public void move() {
@@ -46,34 +40,39 @@ public class Player extends Sprite implements IPhysicsObject {
             }
         }
 
+        if (isFalling) {
+            momentum.translate(0, GRAVITY);
+        }
+
+        // Move the player
         position.translate(momentum.getX(), momentum.getY());
 
-        image.setBounds(position.getX(), position.getY(), WIDTH, HEIGHT);
+        hitBox.setBounds(position.getX(), position.getY(), WIDTH, HEIGHT);
+        image.setBounds(hitBox);
     }
 
     public void jump() {
-        if (!isJumping) {
+        if (!isFalling) {
             momentum.setY(-30);
         }
 
-        isJumping = true;
+        isFalling = true;
     }
 
-    public void checkCollision(Ground[] grounds) {
-        Boolean isColliding = false;
+    public void checkCollision(Sprite[] others) {
+        Boolean collision = false;
 
-        for (Ground other : grounds) {
-            if (hitBox.isColliding(other.getHitBox())) {
-                isColliding = true;
-
-                isJumping = false;
-                position.setY(other.getHitBox().getPosition().getY() - HEIGHT);
+        for (Sprite other : others) {
+            if (isColliding(other)) {
+                collision = true;
+                isFalling = false;
+                position.setY((int) other.getHitBox().getY() - HEIGHT + 1);
                 momentum.setY(0);
             }
         }
 
-        if (!isColliding) {
-            momentum.translate(0, GRAVITY);
+        if (!collision) {
+            isFalling = true;
         }
     }
 

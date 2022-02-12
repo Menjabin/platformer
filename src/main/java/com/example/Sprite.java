@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 
 public class Sprite {
     protected Vector2D position;
-    protected Vector2D momentum;
 
     protected JLabel image;
     protected Rectangle hitBox;
@@ -25,12 +24,25 @@ public class Sprite {
         }
 
         // Configure the hitbox and the swing boundaries
-        Rectangle rect = new Rectangle(position.getX(), position.getY(), width, height);
-        image.setBounds(rect);
-        hitBox.setBounds(rect);
+        hitBox = new Rectangle(position.getX(), position.getY(), width, height);
+        image.setBounds(hitBox);
+
+        this.position = position;
+    }
+    
+    public Boolean isColliding(Sprite other) {
+        if (hitBox.intersects(other.hitBox)) {
+            return true;
+        }
+
+        return false;
     }
 
     // Getters and setters
+
+    public Rectangle getHitBox() {
+        return hitBox;
+    }
 
     public Vector2D getPosition() {
         return position;
@@ -38,14 +50,6 @@ public class Sprite {
 
     public void setPosition(Vector2D position) {
         this.position = position;
-    }
-
-    public Vector2D getMomentum() {
-        return momentum;
-    }
-
-    public void setMomentum(Vector2D momentum) {
-        this.momentum = momentum;
     }
 
     public JLabel getImage() {

@@ -29,7 +29,7 @@ public class GameManager {
         panel.setBackground(new Color(173, 216, 230));
 
         // Load image and add it to the panel
-        player = new Player(new Vector2D(0, 0), "player.png");
+        player = new Player(new Vector2D(50, 10), "player.png");
         panel.add(player.getImage());
 
         // Load ground and add it to the panel
@@ -46,7 +46,7 @@ public class GameManager {
         // Add a canvas to the panel
         canvas = new Canvas();
         canvas.setBounds(0, 0, WIDTH, HEIGHT);
-        canvas.setIgnoreRepaint(true);
+        canvas.setIgnoreRepaint(false);
 
         panel.add(canvas);
 
