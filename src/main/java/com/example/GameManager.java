@@ -40,8 +40,9 @@ public class GameManager {
         panel.add(grounds[0].getImage());
         panel.add(grounds[1].getImage());
 
-        //UI ui = new UI();
-        //panel.add(ui.getHeart());
+        // UI stuff
+        UI ui = new UI();
+        panel.add(ui.getUi());
 
         // Add a canvas to the panel
         canvas = new Canvas();
@@ -50,7 +51,7 @@ public class GameManager {
 
         panel.add(canvas);
 
-        // Define behavior of frame
+        // Define the frame behavior
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setResizable(false);
@@ -60,22 +61,8 @@ public class GameManager {
 
         canvas.requestFocus();
 
+        // Add our custom keylistener
         canvas.addKeyListener(new KeyboardListener(player, this));
-        /*
-        canvas.addMouseMotionListener(new MouseMotionListener() {
-
-            @Override
-            public void mouseDragged(MouseEvent arg0) {
-                
-            }
-
-            @Override
-            public void mouseMoved(MouseEvent arg0) {
-                System.out.println(arg0.getPoint());
-            }
-            
-        });
-        */
     }
 
     public void update() {
