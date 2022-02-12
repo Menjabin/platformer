@@ -29,7 +29,7 @@ public class Level {
     }
 
     public void generateLevel() {
-        int widthFactor = (int) GameManager.WIDTH / layout.get(0).length;
+        int widthFactor = 200;
         int heightFactor = (int) GameManager.HEIGHT / layout.size();
 
         for (int y = 0; y < layout.size(); y++) {
