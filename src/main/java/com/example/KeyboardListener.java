@@ -4,11 +4,9 @@ import java.awt.event.*;
 
 public class KeyboardListener implements KeyListener {
     private Player player;
-    //private GameManager gameManager;
 
-    KeyboardListener(Player player, GameManager gameManager) {
+    KeyboardListener(Player player) {
         this.player = player;
-        //this.gameManager = gameManager;
     }
 
     @Override
@@ -19,24 +17,19 @@ public class KeyboardListener implements KeyListener {
                 return;
             // The left key (left arrow or a) is down
             case KeyEvent.VK_LEFT:
-                player.setKeyLeft(true);
+                GameManager.keyLeft = true;
                 return;
             case KeyEvent.VK_A:
-                player.setKeyLeft(true);
+                GameManager.keyLeft = true;
                 return;
             // The right key (right arrow or d) is down
             case KeyEvent.VK_RIGHT:
-                player.setKeyRight(true);
+                GameManager.keyRight = true;
                 return;
             case KeyEvent.VK_D:
-                player.setKeyRight(true);
+                GameManager.keyRight = true;
                 return;
         }
-    }
-    
-    @Override
-    public void keyTyped(KeyEvent e) {
-
     }
 
     @Override
@@ -44,18 +37,23 @@ public class KeyboardListener implements KeyListener {
         switch (e.getKeyCode()) {
             // The left key (left arrow or a) is down
             case KeyEvent.VK_LEFT:
-                player.setKeyLeft(false);
+                GameManager.keyLeft = false;
                 return;
             case KeyEvent.VK_A:
-                player.setKeyLeft(false);
+                GameManager.keyLeft = false;
                 return;
             // The right key (right arrow or d) is down
             case KeyEvent.VK_RIGHT:
-                player.setKeyRight(false);
+                GameManager.keyRight = false;
                 return;
             case KeyEvent.VK_D:
-                player.setKeyRight(false);
+                GameManager.keyRight = false;
                 return;
         }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
     }
 }

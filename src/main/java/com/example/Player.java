@@ -12,14 +12,9 @@ public class Player extends Sprite implements IPhysicsObject {
     private Boolean isFalling;
     private Vector2D momentum;
 
-    // Keep track of input
-    private Boolean keyLeft;
-    private Boolean keyRight;
-
     Player(Vector2D startPos, String assetName) {
         super(startPos, WIDTH, HEIGHT, assetName);
 
-        keyLeft = keyRight = false;
         isFalling = true;
 
         momentum = new Vector2D();
@@ -27,11 +22,11 @@ public class Player extends Sprite implements IPhysicsObject {
 
     public void move() {
         // Add momentum to the player
-        if (keyLeft && keyRight) {
+        if (GameManager.keyLeft && GameManager.keyRight) {
             momentum.setX(0);
-        } else if (keyLeft) {
+        } else if (GameManager.keyLeft) {
             momentum.setX(-10);
-        } else if (keyRight) {
+        } else if (GameManager.keyRight) {
             momentum.setX(10);
         } else {
             // Decrease the momentum whenever no keys are pressed
@@ -79,14 +74,6 @@ public class Player extends Sprite implements IPhysicsObject {
     }
 
     // Getters and setters
-
-    public void setKeyLeft(Boolean value) {
-        keyLeft = value;
-    }
-
-    public void setKeyRight(Boolean value) {
-        keyRight = value;
-    }
 
     public Vector2D getmomentum() {
         return momentum;

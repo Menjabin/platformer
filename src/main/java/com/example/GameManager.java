@@ -8,12 +8,14 @@ public class GameManager {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
 
+    public static Boolean keyRight;
+    public static Boolean keyLeft;
 
-    JFrame frame;
-    Canvas canvas;
-    Player player;
+    private JFrame frame;
+    private Canvas canvas;
+    private Player player;
 
-    Level level;
+    private Level level;
 
     GameManager() {
         // The main window
@@ -30,13 +32,7 @@ public class GameManager {
         player = new Player(new Vector2D(50, 10), "player.png");
         panel.add(player.getImage());
 
-        // Load ground and add it to the panel
-        //grounds = new Ground[2];
-        //grounds[0] = new Ground(new Vector2D(0, 400), "ground.png");
-        //grounds[1] = new Ground(new Vector2D(400, 300), "ground.png");
-
-        //panel.add(grounds[0].getImage());
-        //panel.add(grounds[1].getImage());
+        // Generate the level
         level = new Level();
         level.generateLevel();
 
@@ -66,7 +62,8 @@ public class GameManager {
         canvas.requestFocus();
 
         // Add our custom keylistener
-        canvas.addKeyListener(new KeyboardListener(player, this));
+        keyRight = keyLeft = false;
+        canvas.addKeyListener(new KeyboardListener(player));
     }
 
     public void update() {
