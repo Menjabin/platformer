@@ -1,5 +1,7 @@
 package com.example;
 
+import java.util.ArrayList;
+
 public class Player extends Sprite implements IPhysicsObject {
     // Width and height of the player
     public static final int WIDTH = 70;
@@ -59,7 +61,7 @@ public class Player extends Sprite implements IPhysicsObject {
         isFalling = true;
     }
 
-    public void checkCollision(Sprite[] others) {
+    public void checkCollision(ArrayList<Sprite> others) {
         Boolean collision = false;
 
         for (Sprite other : others) {

@@ -1,7 +1,5 @@
 package com.example;
 
-import java.io.IOException;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -10,18 +8,19 @@ public class App {
     GameManager gameManager;
 
     // Create a new GameManager, which will start the game
-    App() throws IOException {
+    App() {
         gameManager = new GameManager();
     }
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) {
         App app = new App();
         app.gameLoop();
     }
 
-    public void gameLoop() throws InterruptedException {
+    public void gameLoop() {
         // Run the game at 60 fps
         Timer gameTimer = new Timer();
+
         gameTimer.schedule(new TimerTask() {
 
             @Override

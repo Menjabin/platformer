@@ -1,23 +1,21 @@
 package com.example;
 
 import java.awt.*;
-import java.io.IOException;
-
 import javax.swing.*;
 
 public class GameManager {
     // Dimensions of the game window
-    final int WIDTH = 800;
-    final int HEIGHT = 600;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 600;
 
 
     JFrame frame;
     Canvas canvas;
     Player player;
 
-    Ground[] grounds;
+    Level level;
 
-    GameManager() throws IOException {
+    GameManager() {
         // The main window
         frame = new JFrame("Platformer");
 
@@ -33,12 +31,18 @@ public class GameManager {
         panel.add(player.getImage());
 
         // Load ground and add it to the panel
-        grounds = new Ground[2];
-        grounds[0] = new Ground(new Vector2D(0, 400), "ground.png");
-        grounds[1] = new Ground(new Vector2D(400, 300), "ground.png");
+        //grounds = new Ground[2];
+        //grounds[0] = new Ground(new Vector2D(0, 400), "ground.png");
+        //grounds[1] = new Ground(new Vector2D(400, 300), "ground.png");
 
-        panel.add(grounds[0].getImage());
-        panel.add(grounds[1].getImage());
+        //panel.add(grounds[0].getImage());
+        //panel.add(grounds[1].getImage());
+        level = new Level();
+        level.generateLevel();
+
+        for (Sprite sprite : level.getSprites()) {
+            panel.add(sprite.getImage());
+        }
 
         // UI stuff
         UI ui = new UI();
@@ -67,7 +71,7 @@ public class GameManager {
 
     public void update() {
         player.move();
-        player.checkCollision(grounds);
+        player.checkCollision(level.getSprites());
         // render
     }
 }
