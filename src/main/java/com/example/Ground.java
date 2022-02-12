@@ -7,7 +7,7 @@ public class Ground extends Sprite {
     private int offsetY = 25;
 
     Ground(Vector2D position, String assetName) {
-        super(position, WIDTH, HEIGHT, assetName);
+        super(position, new Vector2D(WIDTH, HEIGHT), assetName);
         hitBox.translate(0, offsetY);
         hitBox.setSize(WIDTH, HEIGHT - offsetY);
     }

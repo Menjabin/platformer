@@ -29,7 +29,7 @@ public class GameManager {
         panel.setBackground(new Color(173, 216, 230));
 
         // Load image and add it to the panel
-        player = new Player(new Vector2D(50, 10), "player.png");
+        player = new Player(new Vector2D(380, 10), "player.png");
         panel.add(player.getImage());
 
         // Generate the level
@@ -67,8 +67,25 @@ public class GameManager {
     }
 
     public void update() {
+        moveCamera();
         player.move();
         player.checkCollision(level.getSprites());
         // render
+    }
+
+    public void moveCamera() {
+        Vector2D momentum = new Vector2D();
+
+        if (keyRight && keyLeft) {
+            momentum.setX(0);
+        } else if (keyRight) {
+            momentum.setX(-10);
+        } else if (keyLeft) {
+            momentum.setX(10);
+        }
+
+        for (Sprite sprite : level.getSprites()) {
+            sprite.move(momentum.getX(), 0);
+        } 
     }
 }

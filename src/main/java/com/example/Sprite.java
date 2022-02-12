@@ -11,11 +11,15 @@ import javax.swing.JLabel;
 
 public class Sprite {
     protected Vector2D position;
+    protected Vector2D dimensions;
 
     protected JLabel image;
     protected Rectangle hitBox;
 
-    Sprite(Vector2D position, int width, int height, String assetName) {
+    Sprite(Vector2D position, Vector2D dimensions, String assetName) {
+        this.position = position;
+        this.dimensions = dimensions;
+
         // Load the image
         try {
             image = new JLabel(new ImageIcon(ImageIO.read(new File(getClass().getResource(assetName).getPath()))));
@@ -24,10 +28,8 @@ public class Sprite {
         }
 
         // Configure the hitbox and the swing boundaries
-        hitBox = new Rectangle(position.getX(), position.getY(), width, height);
+        hitBox = new Rectangle(position.getX(), position.getY(), dimensions.getX(), dimensions.getY());
         image.setBounds(hitBox);
-
-        this.position = position;
     }
     
     public Boolean isColliding(Sprite other) {
@@ -36,6 +38,12 @@ public class Sprite {
         }
 
         return false;
+    }
+
+    public void move(int x, int y) {
+        hitBox.translate(x, y);
+        position.translate(x, y);
+        image.setBounds(position.getX(), position.getY(), dimensions.getX(), dimensions.getY());
     }
 
     // Getters and setters

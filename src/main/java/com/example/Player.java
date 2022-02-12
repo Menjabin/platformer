@@ -13,30 +13,15 @@ public class Player extends Sprite implements IPhysicsObject {
     private Vector2D momentum;
 
     Player(Vector2D startPos, String assetName) {
-        super(startPos, WIDTH, HEIGHT, assetName);
+        super(startPos, new Vector2D(WIDTH, HEIGHT), assetName);
 
         isFalling = true;
 
         momentum = new Vector2D();
     }
 
+    @Override
     public void move() {
-        // Add momentum to the player
-        if (GameManager.keyLeft && GameManager.keyRight) {
-            momentum.setX(0);
-        } else if (GameManager.keyLeft) {
-            momentum.setX(-10);
-        } else if (GameManager.keyRight) {
-            momentum.setX(10);
-        } else {
-            // Decrease the momentum whenever no keys are pressed
-            if (momentum.getX() > 0) {
-                momentum.translate(-1, 0);
-            } else if (momentum.getX() < 0) {
-                momentum.translate(1, 0);
-            }
-        }
-
         if (isFalling) {
             momentum.translate(0, GRAVITY);
         }
