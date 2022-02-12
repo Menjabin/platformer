@@ -28,7 +28,7 @@ public class App {
             public void run() {
                 // Update the state of the game every frame
                 gameManager.update();
-            }  
+            }
         }, 0, 17);
     }
 }

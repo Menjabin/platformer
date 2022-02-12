@@ -29,16 +29,16 @@ public class GameManager {
         panel.setBackground(new Color(173, 216, 230));
 
         // Load image and add it to the panel
-        player = new Player(new Vector2D(0, 0));
-        panel.add(player.getPlayer());
+        player = new Player(new Vector2D(0, 0), "player.png");
+        panel.add(player.getImage());
 
         // Load ground and add it to the panel
         grounds = new Ground[2];
-        grounds[0] = new Ground(new Vector2D(0, 400));
-        grounds[1] = new Ground(new Vector2D(400, 300));
+        grounds[0] = new Ground(new Vector2D(0, 400), "ground.png");
+        grounds[1] = new Ground(new Vector2D(400, 300), "ground.png");
 
-        panel.add(grounds[0].getGround());
-        panel.add(grounds[1].getGround());
+        panel.add(grounds[0].getImage());
+        panel.add(grounds[1].getImage());
 
         //UI ui = new UI();
         //panel.add(ui.getHeart());

@@ -1,26 +1,13 @@
 package com.example;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
-public class Player implements IPhysicsObject {
+public class Player extends Sprite implements IPhysicsObject {
     // Width and height of the player
     private final int WIDTH = 70;
     private final int HEIGHT = 74;
 
-    // 
-    private Vector2D position;
-    private Vector2D momentum;
-
     private final int GRAVITY;
 
     public Boolean isJumping = false;
-
-    private JLabel player;
 
     private Rectangle hitBox;
 
@@ -28,12 +15,9 @@ public class Player implements IPhysicsObject {
     private Boolean keyLeft;
     private Boolean keyRight;
 
-    Player(Vector2D startPos) throws IOException {
-        String path = System.getProperty("user.dir");
-        path += "\\src\\main\\java\\com\\example\\";
-        System.out.println(path);
-        BufferedImage img = ImageIO.read(new File(path + "player.png"));
-        player = new JLabel(new ImageIcon(img));
+    Player(Vector2D startPos, String assetName) {
+        super(assetName);
+
         position = startPos;
 
         keyLeft = keyRight = false;
@@ -42,7 +26,7 @@ public class Player implements IPhysicsObject {
         GRAVITY = 2;
         hitBox = new Rectangle(startPos, WIDTH, HEIGHT);
 
-        player.setBounds(position.getX(), position.getY(), WIDTH, HEIGHT);
+        image.setBounds(position.getX(), position.getY(), WIDTH, HEIGHT);
     }
 
     public void move() {
@@ -64,7 +48,7 @@ public class Player implements IPhysicsObject {
 
         position.translate(momentum.getX(), momentum.getY());
 
-        player.setBounds(position.getX(), position.getY(), WIDTH, HEIGHT);
+        image.setBounds(position.getX(), position.getY(), WIDTH, HEIGHT);
     }
 
     public void jump() {
@@ -105,10 +89,6 @@ public class Player implements IPhysicsObject {
 
     public Vector2D getmomentum() {
         return momentum;
-    }
-
-    public JLabel getPlayer() {
-        return player;
     }
 
     public Vector2D getPosition() {
