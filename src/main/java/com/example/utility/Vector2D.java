@@ -1,4 +1,4 @@
-package com.example;
+package com.example.utility;
 
 public class Vector2D {
     private int x;
@@ -10,7 +10,7 @@ public class Vector2D {
      * @param x The vector's x component
      * @param y The vector's y component
      */
-    Vector2D(int x, int y) {
+    public Vector2D(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -18,7 +18,7 @@ public class Vector2D {
     /**
      * Alternative constructor to create a zero vector
      */
-    Vector2D() {
+    public Vector2D() {
         this.x = 0;
         this.y = 0;
     }

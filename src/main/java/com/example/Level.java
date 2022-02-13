@@ -5,6 +5,10 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import com.example.sprites.Ground;
+import com.example.sprites.Sprite;
+import com.example.utility.Vector2D;
+
 public class Level {
     // Two dimensional array list for storing the level layout
     // The first dimension is y-coordinates, and the second dimension is x-coordinates

@@ -1,6 +1,9 @@
-package com.example;
+package com.example.sprites;
 
 import java.util.ArrayList;
+
+import com.example.IPhysicsObject;
+import com.example.utility.Vector2D;
 
 public class Player extends Sprite implements IPhysicsObject {
     // Width and height of the player
@@ -18,7 +21,7 @@ public class Player extends Sprite implements IPhysicsObject {
      * @param startPos The starting position of the player
      * @param assetName The name of the player image file including the file extension
      */
-    Player(Vector2D startPos, String assetName) {
+    public Player(Vector2D startPos, String assetName) {
         super(startPos, new Vector2D(WIDTH, HEIGHT), assetName);
 
         // The player is always falling at the start of the game

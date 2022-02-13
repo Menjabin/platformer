@@ -3,6 +3,10 @@ package com.example;
 import java.awt.*;
 import javax.swing.*;
 
+import com.example.sprites.Player;
+import com.example.sprites.Sprite;
+import com.example.utility.Vector2D;
+
 public class GameManager {
     // Dimensions of the game window
     public static final int WIDTH = 800;

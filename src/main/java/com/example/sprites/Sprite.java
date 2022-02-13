@@ -1,4 +1,4 @@
-package com.example;
+package com.example.sprites;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,6 +8,8 @@ import java.awt.Rectangle;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+
+import com.example.utility.Vector2D;
 
 public class Sprite {
     protected Vector2D position;
@@ -23,13 +25,13 @@ public class Sprite {
      * @param dimensions The width and height of the sprite
      * @param assetName The filename of the asset including the file extension
      */
-    Sprite(Vector2D position, Vector2D dimensions, String assetName) {
+    public Sprite(Vector2D position, Vector2D dimensions, String assetName) {
         this.position = position;
         this.dimensions = dimensions;
 
         // Try loading the image
         try {
-            image = new JLabel(new ImageIcon(ImageIO.read(new File(getClass().getResource(assetName).getPath()))));
+            image = new JLabel(new ImageIcon(ImageIO.read(new File(getClass().getCanonicalName()))));
         } catch (IOException e) {
             e.printStackTrace();
         }

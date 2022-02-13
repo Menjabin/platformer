@@ -2,6 +2,8 @@ package com.example;
 
 import java.awt.event.*;
 
+import com.example.sprites.Player;
+
 public class KeyboardListener implements KeyListener {
     private Player player;
 

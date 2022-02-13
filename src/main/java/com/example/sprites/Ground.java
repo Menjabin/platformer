@@ -1,4 +1,6 @@
-package com.example;
+package com.example.sprites;
+
+import com.example.utility.Vector2D;
 
 public class Ground extends Sprite {
     // The dimensions of this ground tile
@@ -14,7 +16,7 @@ public class Ground extends Sprite {
      * @param position The position of this ground tile
      * @param assetName The name of the file including the file extension
      */
-    Ground(Vector2D position, String assetName) {
+    public Ground(Vector2D position, String assetName) {
         super(position, new Vector2D(WIDTH, HEIGHT), assetName);
 
         // Fix flower collision
