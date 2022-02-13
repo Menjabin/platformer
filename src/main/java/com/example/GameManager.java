@@ -70,7 +70,7 @@ public class GameManager {
         // Define the frame behavior
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setVisible(true);
 
         // Define the buffer strategy
