@@ -5,10 +5,22 @@ import java.awt.event.*;
 public class KeyboardListener implements KeyListener {
     private Player player;
 
+    /**
+     * Takes the player as an argument in order to perform actions on it
+     * 
+     * @param player The player
+     */
     KeyboardListener(Player player) {
         this.player = player;
     }
 
+    /**
+     * Checks which keys that are pressed.
+     * Updates the values of GameManager.keyLeft and GameManager.keyRight.
+     * Calls player.jump() whenever the space key is pressed
+     * 
+     * @param e The KeyEvent which holds information about which key was pressed
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
@@ -32,6 +44,12 @@ public class KeyboardListener implements KeyListener {
         }
     }
 
+    /**
+     * Checks which keys that are released.
+     * Updates the values of GameManager.keyLeft and GameManager.keyRight
+     * 
+     * @param e The KeyEvent which holds information about which key was released
+     */
     @Override
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {

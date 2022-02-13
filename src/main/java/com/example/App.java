@@ -7,8 +7,9 @@ public class App {
     // The game manager controls everything. This class just starts the program
     GameManager gameManager;
 
-    // Create a new GameManager, which will start the game
+    // Create a new GameManager
     App() {
+        // The GameManager constructor initializes everything
         gameManager = new GameManager();
     }
 
@@ -17,8 +18,10 @@ public class App {
         app.gameLoop();
     }
 
+    /**
+     * The gameloop runs in a fixed 60 frames per second
+     */
     public void gameLoop() {
-        // Run the game at 60 fps
         Timer gameTimer = new Timer();
 
         gameTimer.schedule(new TimerTask() {

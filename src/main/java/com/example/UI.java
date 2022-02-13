@@ -10,6 +10,9 @@ public class UI {
     private JLabel ui;
     private JLabel heart;
 
+    /**
+     * Create the UI and populate it with hearts <3
+     */
     UI() {
         ui = new JLabel();
         ui.setBounds(0, 0, 300, 100);
@@ -24,6 +27,8 @@ public class UI {
             ui.add(heart);
         }
     }
+
+    // Getters and setters
 
     public JLabel getUi() {
         return ui;

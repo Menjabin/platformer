@@ -13,26 +13,38 @@ public class GameManager {
 
     private JFrame frame;
     private Canvas canvas;
-    private Player player;
 
+    private Player player;
     private Level level;
 
+    /**
+     * Does the following:
+     * 
+     * 1. Create the window.
+     * 2. Create the player.
+     * 3. Create the level and generate all its sprites.
+     * 4. Create the UI.
+     * 5. Create a canvas.
+     * 6. Configure window behavior and canvas bufferstrategy.
+     * 7. Add the input listeners to the canvas
+     */
     GameManager() {
-        // The main window
+        // Create the window
         frame = new JFrame("Platformer");
 
-        // Get the panel of the window. We will populate the panel with different widgets
+        // Get the content panel from the window
+        // The content panel will hold all our sprites
         JPanel panel = (JPanel) frame.getContentPane();
         panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         panel.setLayout(null);
 
         panel.setBackground(new Color(173, 216, 230));
 
-        // Load image and add it to the panel
+        // Create the player and add it to the panel
         player = new Player(new Vector2D(380, 10), "player.png");
         panel.add(player.getImage());
 
-        // Generate the level
+        // Generate the level and add all of the sprites to the panel
         level = new Level();
         level.generateLevel();
 
@@ -40,14 +52,14 @@ public class GameManager {
             panel.add(sprite.getImage());
         }
 
-        // UI stuff
+        // Create the UI and add it to the panel
         UI ui = new UI();
         panel.add(ui.getUi());
 
-        // Add a canvas to the panel
+        // Create a canvas and add it to the panel
         canvas = new Canvas();
         canvas.setBounds(0, 0, WIDTH, HEIGHT);
-        canvas.setIgnoreRepaint(false);
+        canvas.setIgnoreRepaint(true);
 
         panel.add(canvas);
 
@@ -57,6 +69,7 @@ public class GameManager {
         frame.setResizable(false);
         frame.setVisible(true);
 
+        // Define the buffer strategy
         canvas.createBufferStrategy(2);
 
         canvas.requestFocus();
@@ -66,6 +79,12 @@ public class GameManager {
         canvas.addKeyListener(new KeyboardListener(player));
     }
 
+    /**
+     * Called every frame.
+     * 
+     * Updates the position of the camera and the player.
+     * Checks for collisions between the player and other sprites
+     */
     public void update() {
         moveCamera();
         player.move();
@@ -73,9 +92,14 @@ public class GameManager {
         // render
     }
 
+    /**
+     * Check which keys are pressed, and move the camera accordingly.
+     * The camera is not actually moved, we just move all the sprites other than the player
+     */
     public void moveCamera() {
         Vector2D momentum = new Vector2D();
 
+        // Set the momentum
         if (keyRight && keyLeft) {
             momentum.setX(0);
         } else if (keyRight) {
@@ -84,6 +108,7 @@ public class GameManager {
             momentum.setX(10);
         }
 
+        // Move all the sprites in the level
         for (Sprite sprite : level.getSprites()) {
             sprite.move(momentum.getX(), 0);
         } 

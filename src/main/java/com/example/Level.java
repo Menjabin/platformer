@@ -10,8 +10,12 @@ public class Level {
     // The first dimension is y-coordinates, and the second dimension is x-coordinates
     ArrayList<String[]> layout = new ArrayList<String[]>();
 
+    // Contains all the sprites belonging to this level
     ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 
+    /**
+     * Read the level file and store the data in the layout array
+     */
     Level() {
         File file = new File(getClass().getResource("level.txt").getPath());
 
@@ -28,6 +32,10 @@ public class Level {
         }
     }
 
+    /**
+     * Generate all the sprites which will populate the level.
+     * Loops through the two dimensional array "layout", and generates the appropriate sprites
+     */
     public void generateLevel() {
         int widthFactor = 200;
         int heightFactor = (int) GameManager.HEIGHT / layout.size();
