@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import com.example.sprites.Ground;
 import com.example.sprites.Sprite;
+import com.example.sprites.Tree;
 import com.example.utility.Vector2D;
 
 public class Level {
@@ -41,14 +42,16 @@ public class Level {
      * Loops through the two dimensional array "layout", and generates the appropriate sprites
      */
     public void generateLevel() {
-        int widthFactor = 200;
-        int heightFactor = (int) GameManager.HEIGHT / layout.size();
+        int gridX = 100;
+        int gridY = GameManager.HEIGHT / layout.size();
 
         for (int y = 0; y < layout.size(); y++) {
             String[] row = layout.get(y);
             for (int x = 0; x < row.length; x++) {
                 if (row[x].equals("1")) {
-                    sprites.add(new Ground(new Vector2D(x * widthFactor, y * heightFactor), "ground.png"));
+                    sprites.add(new Ground(new Vector2D(x * gridX, y * gridY), "ground.png"));
+                } else if (row[x].equals("T")) {
+                    sprites.add(new Tree(new Vector2D(x * gridX + 30, y * gridY - Tree.HEIGHT + 130), "tree.png"));
                 }
             }
         }

@@ -72,11 +72,14 @@ public class Player extends Sprite implements IPhysicsObject {
 
         // Loop through the ArrayList and check for a collision
         for (Sprite other : others) {
-            if (isColliding(other)) {
-                collision = true;
-                isFalling = false;
-                position.setY((int) other.getHitBox().getY() - HEIGHT + 1);
-                momentum.setY(0);
+            // Only check for objects that have a hitbox
+            if (other.getHitBox() != null) {
+                if (isColliding(other)) {
+                    collision = true;
+                    isFalling = false;
+                    position.setY((int) other.getHitBox().getY() - HEIGHT + 1);
+                    momentum.setY(0);
+                }
             }
         }
 

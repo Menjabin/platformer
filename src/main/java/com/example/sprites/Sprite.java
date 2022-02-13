@@ -66,7 +66,9 @@ public class Sprite {
      */
     public void move(int x, int y) {
         // Translate both the hitbox and the position
-        hitBox.translate(x, y);
+        if (hitBox != null) {
+            hitBox.translate(x, y);
+        }
         position.translate(x, y);
         // We cannot just pass the hitbox as an argument here, because some sprites have different bounds and hitboxes
         image.setBounds(position.getX(), position.getY(), dimensions.getX(), dimensions.getY());
