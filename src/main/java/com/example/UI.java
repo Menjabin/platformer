@@ -2,6 +2,7 @@ package com.example;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -19,7 +20,10 @@ public class UI {
 
         for (int i = 0; i < 3; i++) {
             try {
-                heart = new JLabel(new ImageIcon(ImageIO.read(new File(getClass().getResource("heart.png").getPath()))));
+                ClassLoader classLoader = getClass().getClassLoader();
+                InputStream inputStream = classLoader.getResourceAsStream("assets/heart.png");
+    
+                heart = new JLabel(new ImageIcon(ImageIO.read(inputStream)));
             } catch (IOException e) {
                 e.printStackTrace();
             }
