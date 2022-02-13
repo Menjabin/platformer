@@ -63,7 +63,7 @@ public class GameManager {
         // Create a canvas and add it to the panel
         canvas = new Canvas();
         canvas.setBounds(0, 0, WIDTH, HEIGHT);
-        canvas.setIgnoreRepaint(true);
+        canvas.setIgnoreRepaint(false);
 
         panel.add(canvas);
 

@@ -5,9 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.example.sprites.Ground;
 import com.example.sprites.Sprite;
-import com.example.sprites.Tree;
+import com.example.sprites.Tile;
 import com.example.utility.Vector2D;
 
 public class Level {
@@ -42,16 +41,13 @@ public class Level {
      * Loops through the two dimensional array "layout", and generates the appropriate sprites
      */
     public void generateLevel() {
-        int widthFactor = 16;
-        int heightFactor = 16;
+        int tileSize = 96;
 
         for (int y = 0; y < layout.size(); y++) {
             String[] row = layout.get(y);
             for (int x = 0; x < row.length; x++) {
                 if (row[x].equals("1")) {
-                    sprites.add(new Ground(new Vector2D(x * widthFactor, y * heightFactor), "ground.png"));
-                } else if (row[x].equals("T")) {
-                    sprites.add(new Tree(new Vector2D(x * widthFactor + 30, y * heightFactor - Tree.HEIGHT + 130), "tree.png"));
+                    sprites.add(new Tile(new Vector2D(x * tileSize, y * tileSize), new Vector2D(tileSize, tileSize), "grass.png"));
                 }
             }
         }
