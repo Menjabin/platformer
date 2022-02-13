@@ -41,7 +41,7 @@ public class Level {
      * Loops through the two dimensional array "layout", and generates the appropriate sprites
      */
     public void generateLevel() {
-        int tileSize = 96;
+        int tileSize = 16;
 
         for (int y = 0; y < layout.size(); y++) {
             String[] row = layout.get(y);

@@ -9,8 +9,8 @@ import com.example.utility.Vector2D;
 
 public class GameManager {
     // Dimensions of the game window
-    public static final int WIDTH = 800;
-    public static final int HEIGHT = 600;
+    public static final int WIDTH = 640;
+    public static final int HEIGHT = 360;
 
     public static Boolean keyRight;
     public static Boolean keyLeft;

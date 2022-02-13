@@ -11,5 +11,6 @@ public class Tile extends Sprite {
      */
     public Tile(Vector2D position, Vector2D dimensions, String assetName) {
         super(position, dimensions, assetName);
+        //image.setSize(dimensions.getX(), dimensions.getY());
     }
 }
