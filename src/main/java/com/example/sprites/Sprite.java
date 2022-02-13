@@ -1,6 +1,5 @@
 package com.example.sprites;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.awt.Rectangle;
@@ -10,8 +9,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import com.example.utility.Vector2D;
-
-import org.xml.sax.InputSource;
 
 public class Sprite {
     protected Vector2D position;
