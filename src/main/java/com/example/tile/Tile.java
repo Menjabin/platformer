@@ -9,10 +9,11 @@ import com.example.utility.FileLoader;
 import com.example.utility.Vector2D;
 
 public class Tile {
-    private Vector2D position;
+    Vector2D position;
+    Vector2D size;
 
-    private BufferedImage image;
-    private Rectangle hitBox;
+    BufferedImage image;
+    Rectangle hitBox;
 
     /**
      * Create the tile sprite
@@ -20,14 +21,27 @@ public class Tile {
      * @param position The position of this tile
      * @param assetName The name of the asset file including the file extension
      */
-    public Tile(Vector2D position, Vector2D dimensions, String asset) {
+    public Tile(Vector2D position, Vector2D size, String asset) {
         this.position = position;
+        this.size = size;
 
         // Load the image
         image = new FileLoader().loadImage("assets/" + asset);
 
         // Configure the hitbox and the swing boundaries
-        hitBox = new Rectangle(position.getX(), position.getY(), dimensions.getX(), dimensions.getY());
+        hitBox = new Rectangle(position.getX(), position.getY(), size.getX(), size.getY());
+    }
+
+    /**
+     * Update the position and dimensions if the global scale has changed
+     */
+    public void resize() {
+        size.setX(size.getX() * GamePanel.scale);
+        size.setY(size.getY() * GamePanel.scale);
+
+        position.setX(position.getX() * GamePanel.scale);
+        position.setY(position.getY() * GamePanel.scale);
+        hitBox.setBounds(position.getX(), position.getY(), size.getX(), size.getY());
     }
 
     /**
@@ -48,7 +62,7 @@ public class Tile {
      * @param graphics The graphics to draw the tile on
      */
     public void draw(Graphics2D graphics) {
-        graphics.drawImage(image, position.getX(), position.getY(), GamePanel.tileSize, GamePanel.tileSize, null);
+        graphics.drawImage(image, position.getX(), position.getY(), size.getX(), size.getY(), null);
     }
 
     // Getters and setters

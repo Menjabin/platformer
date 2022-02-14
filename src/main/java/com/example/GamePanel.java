@@ -76,13 +76,27 @@ public class GamePanel extends JPanel implements Runnable {
             // Full HD
             if (currentSize.width / WIDTH >= 3 && 4 > currentSize.width / WIDTH) {
                 if (currentSize.height / HEIGHT >= 3 && 4 > currentSize.height / HEIGHT) {
-                    scale = currentSize.width % WIDTH;
+                    scale = (int) currentSize.width / WIDTH;
                     tileSize = ACTUALTILESIZE * scale;
+
+                    for (Tile tile : level.getTiles()) {
+                        tile.resize();
+                    }
+
+                    width = currentSize.width;
+                    height = currentSize.height;
                 }
             } else if (currentSize.width / WIDTH >= 2 && 3 > currentSize.width / WIDTH) {
                 if (currentSize.height / HEIGHT >= 2 && 3 > currentSize.height / HEIGHT) {
-                    scale = currentSize.width % WIDTH;
+                    scale = (int) currentSize.width / WIDTH;
                     tileSize = ACTUALTILESIZE * scale;
+
+                    for (Tile tile : level.getTiles()) {
+                        tile.resize();
+                    }
+
+                    width = currentSize.width;
+                    height = currentSize.height;
                 }
             }
 
@@ -156,6 +170,7 @@ public class GamePanel extends JPanel implements Runnable {
         updateScreenSize();
         moveCamera();
         player.update();
+
         player.checkCollision(level.getTiles());
     }
 
