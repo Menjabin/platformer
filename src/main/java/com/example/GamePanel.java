@@ -3,8 +3,8 @@ package com.example;
 import java.awt.*;
 import javax.swing.*;
 
-import com.example.sprites.Player;
-import com.example.sprites.Sprite;
+import com.example.entity.Player;
+import com.example.tile.Tile;
 import com.example.utility.Vector2D;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -19,6 +19,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     public static final int WIDTH = TILESIZE * MAXSCREENCOL;
     public static final int HEIGHT = TILESIZE * MAXSCREENROW;
+
+    public static Boolean keyRight;
+    public static Boolean keyLeft;
 
     Player player;
     Level level;
@@ -63,6 +66,7 @@ public class GamePanel extends JPanel implements Runnable {
         //canvas.requestFocus();
                 
         // Add our custom keylistener
+        keyRight = keyLeft = false;
         addKeyListener(new KeyboardListener(player));
 
         requestFocus();
@@ -77,7 +81,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
         moveCamera();
         player.move();
-        player.checkCollision(level.getSprites());
+        player.checkCollision(level.getTiles());
         // render
     }
 
@@ -89,17 +93,17 @@ public class GamePanel extends JPanel implements Runnable {
         Vector2D momentum = new Vector2D();
 
         // Set the momentum
-        if (App.keyRight && App.keyLeft) {
+        if (keyRight && keyLeft) {
             momentum.setX(0);
-        } else if (App.keyRight) {
+        } else if (keyRight) {
             momentum.setX(-10);
-        } else if (App.keyLeft) {
+        } else if (keyLeft) {
             momentum.setX(10);
         }
 
         // Move all the sprites in the level
-        for (Sprite sprite : level.getSprites()) {
-            sprite.move(momentum.getX(), 0);
+        for (Tile tile : level.getTiles()) {
+            tile.move(momentum.getX(), 0);
         } 
     }
 
@@ -128,13 +132,16 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    public void paintComponent(Graphics graphics) {
-        super.paintComponent(graphics);
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
-        Graphics2D graphics2d = (Graphics2D) graphics;
+        Graphics2D graphics = (Graphics2D) g;
 
-        player.draw(graphics2d);
+        player.draw(graphics);
+        for (Tile tile : level.getTiles()) {
+            tile.draw(graphics);
+        } 
 
-        graphics2d.dispose();
+        graphics.dispose();
     }
 }

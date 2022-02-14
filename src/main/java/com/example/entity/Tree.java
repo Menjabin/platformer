@@ -1,8 +1,8 @@
-package com.example.sprites;
+package com.example.entity;
 
 import com.example.utility.Vector2D;
 
-public class Tree extends Sprite {
+public class Tree extends Entity {
     // The dimensions of this ground tile
     public static final int WIDTH = 330;
     public static final int HEIGHT = 348;

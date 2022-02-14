@@ -1,13 +1,14 @@
-package com.example.sprites;
+package com.example.entity;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import com.example.GamePanel;
 import com.example.IPhysicsObject;
+import com.example.tile.Tile;
 import com.example.utility.Vector2D;
 
-public class Player extends Sprite implements IPhysicsObject {
+public class Player extends Entity implements IPhysicsObject {
     // Width and height of the player
     public static final int WIDTH = 70;
     public static final int HEIGHT = 74;
@@ -68,14 +69,14 @@ public class Player extends Sprite implements IPhysicsObject {
      * 
      * @param others An ArrayList containing all the sprites we want to check collision for
      */
-    public void checkCollision(ArrayList<Sprite> others) {
+    public void checkCollision(ArrayList<Tile> others) {
         Boolean collision = false;
 
         // Loop through the ArrayList and check for a collision
-        for (Sprite other : others) {
+        for (Tile other : others) {
             // Only check for objects that have a hitbox
             if (other.getHitBox() != null) {
-                if (isColliding(other)) {
+                if (hitBox.intersects(other.getHitBox())) {
                     collision = true;
                     isFalling = false;
                     position.setY((int) other.getHitBox().getY() - HEIGHT + 1);

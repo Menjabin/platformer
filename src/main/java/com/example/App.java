@@ -2,14 +2,7 @@ package com.example;
 
 import javax.swing.*;
 
-import com.example.sprites.Player;
-
 public class App {
-    public static Boolean keyRight;
-    public static Boolean keyLeft;
-
-    public static Player player;
-
     public static void main(String[] args) {
         JFrame window = new JFrame();
 
@@ -26,10 +19,6 @@ public class App {
         // Display the window
         window.setLocationRelativeTo(null);
         window.setVisible(true);
-
-        player = gamePanel.player;
-        
-        keyRight = keyLeft = false;
 
         gamePanel.startGameThread();
     }

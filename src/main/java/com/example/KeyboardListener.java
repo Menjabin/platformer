@@ -2,7 +2,7 @@ package com.example;
 
 import java.awt.event.*;
 
-import com.example.sprites.Player;
+import com.example.entity.Player;
 
 public class KeyboardListener implements KeyListener {
     private Player player;
@@ -31,17 +31,17 @@ public class KeyboardListener implements KeyListener {
                 return;
             // The left key (left arrow or a) is down
             case KeyEvent.VK_LEFT:
-                App.keyLeft = true;
+                GamePanel.keyLeft = true;
                 return;
             case KeyEvent.VK_A:
-                App.keyLeft = true;
+                GamePanel.keyLeft = true;
                 return;
             // The right key (right arrow or d) is down
             case KeyEvent.VK_RIGHT:
-                App.keyRight = true;
+                GamePanel.keyRight = true;
                 return;
             case KeyEvent.VK_D:
-                App.keyRight = true;
+                GamePanel.keyRight = true;
                 return;
         }
     }
@@ -57,17 +57,17 @@ public class KeyboardListener implements KeyListener {
         switch (e.getKeyCode()) {
             // The left key (left arrow or a) is down
             case KeyEvent.VK_LEFT:
-                App.keyLeft = false;
+                GamePanel.keyLeft = false;
                 return;
             case KeyEvent.VK_A:
-                App.keyLeft = false;
+                GamePanel.keyLeft = false;
                 return;
             // The right key (right arrow or d) is down
             case KeyEvent.VK_RIGHT:
-                App.keyRight = false;
+                GamePanel.keyRight = false;
                 return;
             case KeyEvent.VK_D:
-                App.keyRight = false;
+                GamePanel.keyRight = false;
                 return;
         }
     }

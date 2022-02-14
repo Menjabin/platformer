@@ -1,4 +1,4 @@
-package com.example.sprites;
+package com.example.entity;
 
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import com.example.utility.ImageLoader;
 import com.example.utility.Vector2D;
 
-public class Sprite {
+public class Entity {
     protected Vector2D position;
     protected Vector2D dimensions;
 
@@ -20,7 +20,7 @@ public class Sprite {
      * @param dimensions The width and height of the sprite
      * @param assetName The filename of the asset including the file extension
      */
-    public Sprite(Vector2D position, Vector2D dimensions, String asset) {
+    public Entity(Vector2D position, Vector2D dimensions, String asset) {
         this.position = position;
         this.dimensions = dimensions;
 
@@ -37,7 +37,7 @@ public class Sprite {
      * @param other The other sprite
      * @return True if colliding, false if not
      */
-    public Boolean isColliding(Sprite other) {
+    public Boolean isColliding(Entity other) {
         // Uses the function Rectangle.intersects() to check for collision
         if (hitBox.intersects(other.hitBox)) {
             return true;

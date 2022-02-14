@@ -5,8 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.example.sprites.Sprite;
-import com.example.sprites.Tile;
+import com.example.tile.Tile;
 import com.example.utility.Vector2D;
 
 public class Level {
@@ -15,7 +14,7 @@ public class Level {
     ArrayList<String[]> layout = new ArrayList<String[]>();
 
     // Contains all the sprites belonging to this level
-    ArrayList<Sprite> sprites = new ArrayList<Sprite>();
+    ArrayList<Tile> tiles = new ArrayList<Tile>();
 
     /**
      * Read the level file and store the data in the layout array
@@ -41,13 +40,13 @@ public class Level {
      * Loops through the two dimensional array "layout", and generates the appropriate sprites
      */
     public void generateLevel() {
-        int tileSize = 16;
+        int tileSize = GamePanel.TILESIZE;
 
         for (int y = 0; y < layout.size(); y++) {
             String[] row = layout.get(y);
             for (int x = 0; x < row.length; x++) {
                 if (row[x].equals("1")) {
-                    sprites.add(new Tile(new Vector2D(x * tileSize, y * tileSize), new Vector2D(tileSize, tileSize), "grass.png"));
+                    tiles.add(new Tile(new Vector2D(x * tileSize, y * tileSize), new Vector2D(tileSize, tileSize), "grass.png"));
                 }
             }
         }
@@ -55,7 +54,7 @@ public class Level {
 
     // Getters and setters
 
-    public ArrayList<Sprite> getSprites() {
-        return sprites;
+    public ArrayList<Tile> getTiles() {
+        return tiles;
     }
 }
