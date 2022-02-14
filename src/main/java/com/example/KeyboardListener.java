@@ -31,17 +31,17 @@ public class KeyboardListener implements KeyListener {
                 return;
             // The left key (left arrow or a) is down
             case KeyEvent.VK_LEFT:
-                GameManager.keyLeft = true;
+                App.keyLeft = true;
                 return;
             case KeyEvent.VK_A:
-                GameManager.keyLeft = true;
+                App.keyLeft = true;
                 return;
             // The right key (right arrow or d) is down
             case KeyEvent.VK_RIGHT:
-                GameManager.keyRight = true;
+                App.keyRight = true;
                 return;
             case KeyEvent.VK_D:
-                GameManager.keyRight = true;
+                App.keyRight = true;
                 return;
         }
     }
@@ -57,17 +57,17 @@ public class KeyboardListener implements KeyListener {
         switch (e.getKeyCode()) {
             // The left key (left arrow or a) is down
             case KeyEvent.VK_LEFT:
-                GameManager.keyLeft = false;
+                App.keyLeft = false;
                 return;
             case KeyEvent.VK_A:
-                GameManager.keyLeft = false;
+                App.keyLeft = false;
                 return;
             // The right key (right arrow or d) is down
             case KeyEvent.VK_RIGHT:
-                GameManager.keyRight = false;
+                App.keyRight = false;
                 return;
             case KeyEvent.VK_D:
-                GameManager.keyRight = false;
+                App.keyRight = false;
                 return;
         }
     }

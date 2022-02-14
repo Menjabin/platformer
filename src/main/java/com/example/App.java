@@ -1,36 +1,51 @@
 package com.example;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.awt.*;
+import javax.swing.*;
+
+import com.example.sprites.Player;
 
 public class App {
-    // The game manager controls everything. This class just starts the program
-    GameManager gameManager;
+    public static Boolean keyRight;
+    public static Boolean keyLeft;
 
-    // Create a new GameManager
-    App() {
-        // The GameManager constructor initializes everything
-        gameManager = new GameManager();
-    }
+    public static Player player;
 
     public static void main(String[] args) {
-        App app = new App();
-        app.gameLoop();
-    }
+        JFrame window = new JFrame();
 
-    /**
-     * The gameloop runs in a fixed 60 frames per second
-     */
-    public void gameLoop() {
-        Timer gameTimer = new Timer();
+        // Define window behavior
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setResizable(true);
+        window.setTitle("Platformer");
 
-        gameTimer.schedule(new TimerTask() {
+        GamePanel gamePanel = new GamePanel();
+        window.add(gamePanel);
 
-            @Override
-            public void run() {
-                // Update the state of the game every frame
-                gameManager.update();
-            }
-        }, 0, 17);
+        window.pack();
+
+        // Create a canvas and add it to the panel
+        //Canvas canvas = new Canvas();
+        //canvas.setBounds(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
+        //canvas.setIgnoreRepaint(false);
+        
+        //gamePanel.add(canvas);
+        
+        // Display the window
+        window.setLocationRelativeTo(null);
+        window.setVisible(true);
+
+        // Define the buffer strategy
+        //canvas.createBufferStrategy(2);
+        
+        //canvas.requestFocus();
+
+        //player = gamePanel.player;
+        
+        // Add our custom keylistener
+        keyRight = keyLeft = false;
+        //canvas.addKeyListener(new KeyboardListener(player));
+
+        gamePanel.startGameThread();
     }
 }

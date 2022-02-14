@@ -7,19 +7,23 @@ import com.example.sprites.Player;
 import com.example.sprites.Sprite;
 import com.example.utility.Vector2D;
 
-public class GameManager {
-    // Dimensions of the game window
-    public static final int WIDTH = 640;
-    public static final int HEIGHT = 360;
+public class GamePanel extends JPanel implements Runnable {
+    // Tiling and the window dimensions
+    public static final int ACTUALTILESIZE = 16;
+    public static final int SCALE = 4;
 
-    public static Boolean keyRight;
-    public static Boolean keyLeft;
+    public static final int TILESIZE = ACTUALTILESIZE * SCALE;
 
-    private JFrame frame;
-    private Canvas canvas;
+    public static final int MAXSCREENCOL = 10;
+    public static final int MAXSCREENROW = 6;
 
-    private Player player;
-    private Level level;
+    public static final int WIDTH = TILESIZE * MAXSCREENCOL;
+    public static final int HEIGHT = TILESIZE * MAXSCREENROW;
+
+    Player player;
+    Level level;
+
+    Thread gameThread;
 
     /**
      * Does the following:
@@ -32,55 +36,22 @@ public class GameManager {
      * 6. Configure window behavior and canvas bufferstrategy.
      * 7. Add the input listeners to the canvas
      */
-    GameManager() {
-        // Create the window
-        frame = new JFrame("Platformer");
-
-        // Get the content panel from the window
-        // The content panel will hold all our sprites
-        JPanel panel = (JPanel) frame.getContentPane();
-        panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        panel.setLayout(null);
-
-        panel.setBackground(new Color(173, 216, 230));
+    public GamePanel() {
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        setBackground(new Color(173, 216, 230));
+        setDoubleBuffered(true);
 
         // Create the player and add it to the panel
         player = new Player(new Vector2D(380, 10), "player.png");
-        panel.add(player.getImage());
-
+        add(player.getImage());
+                
         // Generate the level and add all of the sprites to the panel
         level = new Level();
         level.generateLevel();
-
+                
         for (Sprite sprite : level.getSprites()) {
-            panel.add(sprite.getImage());
+            add(sprite.getImage());
         }
-
-        // Create the UI and add it to the panel
-        UI ui = new UI();
-        panel.add(ui.getUi());
-
-        // Create a canvas and add it to the panel
-        canvas = new Canvas();
-        canvas.setBounds(0, 0, WIDTH, HEIGHT);
-        canvas.setIgnoreRepaint(false);
-
-        panel.add(canvas);
-
-        // Define the frame behavior
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setResizable(true);
-        frame.setVisible(true);
-
-        // Define the buffer strategy
-        canvas.createBufferStrategy(2);
-
-        canvas.requestFocus();
-
-        // Add our custom keylistener
-        keyRight = keyLeft = false;
-        canvas.addKeyListener(new KeyboardListener(player));
     }
 
     /**
@@ -104,11 +75,11 @@ public class GameManager {
         Vector2D momentum = new Vector2D();
 
         // Set the momentum
-        if (keyRight && keyLeft) {
+        if (App.keyRight && App.keyLeft) {
             momentum.setX(0);
-        } else if (keyRight) {
+        } else if (App.keyRight) {
             momentum.setX(-10);
-        } else if (keyLeft) {
+        } else if (App.keyLeft) {
             momentum.setX(10);
         }
 
@@ -116,5 +87,31 @@ public class GameManager {
         for (Sprite sprite : level.getSprites()) {
             sprite.move(momentum.getX(), 0);
         } 
+    }
+
+    public void startGameThread() {
+        gameThread = new Thread(this);
+        gameThread.start();
+    }
+
+    @Override
+    public void run() {
+        while (gameThread != null) {
+            // Update game logic
+            update();
+            // Paint everything again
+            repaint();
+        }
+    }
+
+    public void paintComponent(Graphics graphics) {
+        super.paintComponent(graphics);
+
+        Graphics2D graphics2d = (Graphics2D) graphics;
+
+        graphics2d.setColor(Color.white);
+        graphics2d.fillRect(100, 100, TILESIZE, TILESIZE);
+
+        graphics2d.dispose();
     }
 }
