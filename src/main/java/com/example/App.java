@@ -11,6 +11,7 @@ public class App {
         window.setResizable(true);
         window.setTitle("Platformer");
 
+        // The game panel controls game logic and rendering
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
 
@@ -20,6 +21,7 @@ public class App {
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
+        // Start the game
         gamePanel.startGameThread();
     }
 }

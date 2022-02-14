@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import com.example.GamePanel;
-import com.example.utility.ImageLoader;
+import com.example.utility.FileLoader;
 import com.example.utility.Vector2D;
 
 public class Tile {
@@ -23,21 +23,30 @@ public class Tile {
     public Tile(Vector2D position, Vector2D dimensions, String asset) {
         this.position = position;
 
-        // Try loading the image
-        image = new ImageLoader().loadImage(asset);
+        // Load the image
+        image = new FileLoader().loadImage("assets/" + asset);
 
         // Configure the hitbox and the swing boundaries
         hitBox = new Rectangle(position.getX(), position.getY(), dimensions.getX(), dimensions.getY());
     }
 
+    /**
+     * Move the tile by x and y
+     * 
+     * @param x Change in x direction
+     * @param y Change in y direction
+     */
     public void move(int x, int y) {
-        // Move the tile
+        // Move the tile and update the hitbox
         position.translate(x, y);
-
-        // Update the hitbox
-        hitBox.setBounds(position.getX(), position.getY(), GamePanel.TILESIZE, GamePanel.TILESIZE);
+        hitBox.translate(x, y);
     }
 
+    /**
+     * Draw the tile
+     * 
+     * @param graphics The graphics to draw the tile on
+     */
     public void draw(Graphics2D graphics) {
         graphics.drawImage(image, position.getX(), position.getY(), GamePanel.TILESIZE, GamePanel.TILESIZE, null);
     }

@@ -21,7 +21,7 @@ public class UI {
             try {
                 ClassLoader classLoader = getClass().getClassLoader();
                 InputStream inputStream = classLoader.getResourceAsStream("assets/heart.png");
-    
+                
                 heart = new JLabel(new ImageIcon(ImageIO.read(inputStream)));
             } catch (IOException e) {
                 e.printStackTrace();

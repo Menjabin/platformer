@@ -36,8 +36,8 @@ public class Level {
     }
 
     /**
-     * Generate all the sprites which will populate the level.
-     * Loops through the two dimensional array "layout", and generates the appropriate sprites
+     * Generate all the tiles which will populate the level.
+     * Loops through the two dimensional array "layout", and generates the appropriate tiles
      */
     public void generateLevel() {
         int tileSize = GamePanel.TILESIZE;

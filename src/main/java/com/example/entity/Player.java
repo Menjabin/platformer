@@ -4,28 +4,27 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import com.example.GamePanel;
-import com.example.IPhysicsObject;
 import com.example.tile.Tile;
 import com.example.utility.Vector2D;
 
-public class Player extends Entity implements IPhysicsObject {
+public class Player extends Entity {
     // Width and height of the player
     public static final int WIDTH = GamePanel.TILESIZE;
     public static final int HEIGHT = GamePanel.TILESIZE;
 
     public final int GRAVITY = 2;
 
-    private Boolean isFalling;
-    private Vector2D momentum;
+    Boolean isFalling;
+    Vector2D momentum;
 
     /**
-     * Create the player sprite and initialize some field variables
+     * Create the player entity and initialize some field variables
      * 
      * @param startPos The starting position of the player
-     * @param assetName The name of the player image file including the file extension
+     * @param asset The name of the player image file including the file extension
      */
-    public Player(Vector2D startPos, String assetName) {
-        super(startPos, new Vector2D(WIDTH, HEIGHT), assetName);
+    public Player(Vector2D startPos, String asset) {
+        super(startPos, new Vector2D(WIDTH, HEIGHT), asset);
 
         // The player is always falling at the start of the game
         isFalling = true;
@@ -35,21 +34,14 @@ public class Player extends Entity implements IPhysicsObject {
     }
 
     /**
-     * Checks if the player is falling.
-     * If the player is falling, increases the falling speed.
-     * Updates the position, hitbox and image of the player
+     * Update the player's momentum and position
      */
-    @Override
-    public void move() {
+    public void update() {
         if (isFalling) {
             momentum.translate(0, GRAVITY);
         }
 
-        // Move the player
-        position.translate(momentum.getX(), momentum.getY());
-
-        // Update the hitbox
-        hitBox.setBounds(position.getX(), position.getY(), WIDTH, HEIGHT);
+        move(momentum.getX(), momentum.getY());
     }
 
     /**
@@ -65,9 +57,9 @@ public class Player extends Entity implements IPhysicsObject {
     }
 
     /**
-     * Check whether the player is colliding with any of the sprites in others
+     * Check whether the player is colliding with any of the tiles in others
      * 
-     * @param others An ArrayList containing all the sprites we want to check collision for
+     * @param others An ArrayList containing all the tiles we want to check collision for
      */
     public void checkCollision(ArrayList<Tile> others) {
         Boolean collision = false;
@@ -91,6 +83,11 @@ public class Player extends Entity implements IPhysicsObject {
         }
     }
 
+    /**
+     * Draw the player image
+     * 
+     * @param graphics The graphics where we will draw the player
+     */
     public void draw(Graphics2D graphics) {
         graphics.drawImage(image, position.getX(), position.getY(), GamePanel.TILESIZE, GamePanel.TILESIZE, null);
     }

@@ -18,7 +18,7 @@ public class KeyboardListener implements KeyListener {
 
     /**
      * Checks which keys that are pressed.
-     * Updates the values of GameManager.keyLeft and GameManager.keyRight.
+     * Updates the values of GamePanel.keyLeft and GamePanel.keyRight.
      * Calls player.jump() whenever the space key is pressed
      * 
      * @param e The KeyEvent which holds information about which key was pressed
@@ -48,7 +48,7 @@ public class KeyboardListener implements KeyListener {
 
     /**
      * Checks which keys that are released.
-     * Updates the values of GameManager.keyLeft and GameManager.keyRight
+     * Updates the values of GamePanel.keyLeft and GamePanel.keyRight
      * 
      * @param e The KeyEvent which holds information about which key was released
      */
