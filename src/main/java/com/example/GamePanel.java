@@ -69,7 +69,7 @@ public class GamePanel extends JPanel implements Runnable {
         keyRight = keyLeft = false;
         addKeyListener(new KeyboardListener(player));
 
-        requestFocus();
+        setFocusable(true);
     }
 
     /**

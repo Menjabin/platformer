@@ -10,10 +10,10 @@ import com.example.utility.Vector2D;
 
 public class Player extends Entity implements IPhysicsObject {
     // Width and height of the player
-    public static final int WIDTH = 70;
-    public static final int HEIGHT = 74;
+    public static final int WIDTH = GamePanel.TILESIZE;
+    public static final int HEIGHT = GamePanel.TILESIZE;
 
-    public final int GRAVITY = 1;
+    public final int GRAVITY = 2;
 
     private Boolean isFalling;
     private Vector2D momentum;
