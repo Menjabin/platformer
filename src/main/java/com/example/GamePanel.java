@@ -51,7 +51,7 @@ public class GamePanel extends JPanel implements Runnable {
         setDoubleBuffered(true);
 
         // Create the player
-        player = new Player(new Vector2D(100, 10), "player.png");
+        player = new Player(new Vector2D(100, 50), "player.png");
 
         // Generate the level
         level = new Level();
@@ -71,37 +71,23 @@ public class GamePanel extends JPanel implements Runnable {
      */
     public void updateScreenSize() {
         Dimension currentSize = getSize();
-        
-        if (currentSize.getWidth() > width && currentSize.getHeight() > height) {
-            // Full HD
-            if (currentSize.width / WIDTH >= 3 && 4 > currentSize.width / WIDTH) {
-                if (currentSize.height / HEIGHT >= 3 && 4 > currentSize.height / HEIGHT) {
-                    scale = (int) currentSize.width / WIDTH;
-                    tileSize = ACTUALTILESIZE * scale;
 
-                    for (Tile tile : level.getTiles()) {
-                        tile.resize();
-                    }
+        int scaleX = (int) currentSize.getWidth() / (WIDTH);
+        int scaleY = (int) currentSize.getHeight() / (HEIGHT);
 
-                    width = currentSize.width;
-                    height = currentSize.height;
-                }
-            } else if (currentSize.width / WIDTH >= 2 && 3 > currentSize.width / WIDTH) {
-                if (currentSize.height / HEIGHT >= 2 && 3 > currentSize.height / HEIGHT) {
-                    scale = (int) currentSize.width / WIDTH;
-                    tileSize = ACTUALTILESIZE * scale;
+        int prevScale = scale;
+        int newScale = Math.min(scaleX, scaleY);
 
-                    for (Tile tile : level.getTiles()) {
-                        tile.resize();
-                    }
+        //JPanel oldPanel = this.scale
 
-                    width = currentSize.width;
-                    height = currentSize.height;
-                }
+        /*
+        if (scale != prevScale) {
+            player.resize();
+            for (Tile tile : level.getTiles()) {
+                tile.resize();
             }
-
         }
-
+        */
         // Up the scale if the size is larger than a multiple of the original resolution.
     }
 
@@ -168,6 +154,7 @@ public class GamePanel extends JPanel implements Runnable {
      */
     public void update() {
         updateScreenSize();
+
         moveCamera();
         player.update();
 
@@ -189,8 +176,28 @@ public class GamePanel extends JPanel implements Runnable {
         player.draw(graphics);
         for (Tile tile : level.getTiles()) {
             tile.draw(graphics);
-        } 
+        }
 
         graphics.dispose();
+    }
+
+    /**
+     * Adjusts the input value to the window scale
+     * 
+     * @param value The value to translate
+     * @return The input value adjusted to the current scale of the window
+     */
+    public static int translateToScale(int value) {
+        return value * scale;
+    }
+
+    /**
+     * Adjusts the input value to the window scale
+     * 
+     * @param value The value to translate
+     * @return The input value adjusted to the current scale of the window
+     */
+    public static Vector2D translateToScale(Vector2D value) {
+        return new Vector2D(value.getX() * scale, value.getY() * scale);
     }
 }

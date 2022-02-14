@@ -8,7 +8,7 @@ import com.example.utility.Vector2D;
 
 public class Entity {
     protected Vector2D position;
-    protected Vector2D dimensions;
+    protected Vector2D size;
 
     protected BufferedImage image;
     protected Rectangle hitBox;
@@ -17,18 +17,18 @@ public class Entity {
      * Load the corresponding image and update the hitbox
      * 
      * @param position The initial position of the sprite
-     * @param dimensions The width and height of the sprite
+     * @param size The width and height of the sprite
      * @param asset The filename of the asset including the file extension
      */
-    public Entity(Vector2D position, Vector2D dimensions, String asset) {
+    public Entity(Vector2D position, Vector2D size, String asset) {
         this.position = position;
-        this.dimensions = dimensions;
+        this.size = size;
 
         // Try loading the image
         image = new FileLoader().loadImage("assets/" + asset);
 
         // Configure the hitbox and the swing boundaries
-        hitBox = new Rectangle(position.getX(), position.getY(), dimensions.getX(), dimensions.getY());
+        hitBox = new Rectangle(position.getX(), position.getY(), size.getX(), size.getY());
     }
 
     /**

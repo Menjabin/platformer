@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import com.example.GamePanel;
 import com.example.utility.FileLoader;
 import com.example.utility.Vector2D;
 
@@ -19,7 +18,7 @@ public class Tile {
      * Create the tile sprite
      * 
      * @param position The position of this tile
-     * @param assetName The name of the asset file including the file extension
+     * @param size The name of the asset file including the file extension
      */
     public Tile(Vector2D position, Vector2D size, String asset) {
         this.position = position;
@@ -30,18 +29,6 @@ public class Tile {
 
         // Configure the hitbox and the swing boundaries
         hitBox = new Rectangle(position.getX(), position.getY(), size.getX(), size.getY());
-    }
-
-    /**
-     * Update the position and dimensions if the global scale has changed
-     */
-    public void resize() {
-        size.setX(size.getX() * GamePanel.scale);
-        size.setY(size.getY() * GamePanel.scale);
-
-        position.setX(position.getX() * GamePanel.scale);
-        position.setY(position.getY() * GamePanel.scale);
-        hitBox.setBounds(position.getX(), position.getY(), size.getX(), size.getY());
     }
 
     /**

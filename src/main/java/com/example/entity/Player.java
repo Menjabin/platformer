@@ -9,10 +9,10 @@ import com.example.utility.Vector2D;
 
 public class Player extends Entity {
     // Width and height of the player
-    public static final int WIDTH = GamePanel.tileSize;
-    public static final int HEIGHT = GamePanel.tileSize;
+    public static final int WIDTH = GamePanel.ACTUALTILESIZE;
+    public static final int HEIGHT = GamePanel.ACTUALTILESIZE;
 
-    public final int GRAVITY = 2;
+    public static final int GRAVITY = 2;
 
     Boolean isFalling;
     Vector2D momentum;
@@ -20,11 +20,11 @@ public class Player extends Entity {
     /**
      * Create the player entity and initialize some field variables
      * 
-     * @param startPos The starting position of the player
+     * @param position The starting position of the player
      * @param asset The name of the player image file including the file extension
      */
-    public Player(Vector2D startPos, String asset) {
-        super(startPos, new Vector2D(WIDTH, HEIGHT), asset);
+    public Player(Vector2D position, String asset) {
+        super(position, new Vector2D(WIDTH, HEIGHT), asset);
 
         // The player is always falling at the start of the game
         isFalling = true;
@@ -89,7 +89,7 @@ public class Player extends Entity {
      * @param graphics The graphics where we will draw the player
      */
     public void draw(Graphics2D graphics) {
-        graphics.drawImage(image, position.getX(), position.getY(), GamePanel.tileSize, GamePanel.tileSize, null);
+        graphics.drawImage(image, position.getX(), position.getY(), size.getX(), size.getY(), null);
     }
 
     // Getters and setters
