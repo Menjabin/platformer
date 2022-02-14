@@ -1,8 +1,10 @@
 package com.example.utility;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 
@@ -24,5 +26,18 @@ public class FileLoader {
         }
 
         return null;
+    }
+
+    /**
+     * Read the given file
+     * 
+     * @param fileName The path to the file relative to the resource folder
+     * @return The file
+     */
+    public File readFile(String fileName) {
+        ClassLoader classLoader = getClass().getClassLoader();
+        URL url = classLoader.getResource(fileName);
+
+        return new File(url.getPath());
     }
 }

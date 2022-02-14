@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.example.tile.Tile;
+import com.example.utility.FileLoader;
 import com.example.utility.Vector2D;
 
 public class Level {
@@ -20,13 +21,17 @@ public class Level {
      * Read the level file and store the data in the layout array
      */
     Level() {
-        File file = new File(getClass().getResource("level.txt").getPath());
+        File file = new FileLoader().readFile("levels/level1.tmx");
 
         try {
             Scanner sc = new Scanner(file);
 
-            while (sc.hasNextLine()) {
-                layout.add(sc.nextLine().split(" "));
+            for (int i = 0; i < 5; i++) {
+                sc.nextLine();
+            }
+
+            for (int i = 0; i < GamePanel.MAXSCREENROW; i++) {
+                layout.add(sc.nextLine().split(","));
             }
 
             sc.close();

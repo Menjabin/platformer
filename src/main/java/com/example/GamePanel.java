@@ -14,8 +14,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public static final int TILESIZE = ACTUALTILESIZE * SCALE;
 
-    public static final int MAXSCREENCOL = 10;
-    public static final int MAXSCREENROW = 6;
+    public static final int MAXSCREENCOL = 40;
+    public static final int MAXSCREENROW = 23;
 
     public static final int WIDTH = 640;
     public static final int HEIGHT = 360;
