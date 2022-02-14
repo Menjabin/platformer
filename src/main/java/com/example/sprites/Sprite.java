@@ -1,20 +1,16 @@
 package com.example.sprites;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-
+import com.example.utility.ImageLoader;
 import com.example.utility.Vector2D;
 
 public class Sprite {
     protected Vector2D position;
     protected Vector2D dimensions;
 
-    protected JLabel image;
+    protected BufferedImage image;
     protected Rectangle hitBox;
 
     /**
@@ -24,23 +20,15 @@ public class Sprite {
      * @param dimensions The width and height of the sprite
      * @param assetName The filename of the asset including the file extension
      */
-    public Sprite(Vector2D position, Vector2D dimensions, String assetName) {
+    public Sprite(Vector2D position, Vector2D dimensions, String asset) {
         this.position = position;
         this.dimensions = dimensions;
 
         // Try loading the image
-        try {
-            ClassLoader classLoader = getClass().getClassLoader();
-            InputStream inputStream = classLoader.getResourceAsStream("assets/" + assetName);
-
-            image = new JLabel(new ImageIcon(ImageIO.read(inputStream)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        image = new ImageLoader().loadImage(asset);
 
         // Configure the hitbox and the swing boundaries
         hitBox = new Rectangle(position.getX(), position.getY(), dimensions.getX(), dimensions.getY());
-        image.setBounds(hitBox);
     }
     
     /**
@@ -70,8 +58,6 @@ public class Sprite {
             hitBox.translate(x, y);
         }
         position.translate(x, y);
-        // We cannot just pass the hitbox as an argument here, because some sprites have different bounds and hitboxes
-        image.setBounds(position.getX(), position.getY(), dimensions.getX(), dimensions.getY());
     }
 
     // Getters and setters
@@ -88,11 +74,11 @@ public class Sprite {
         this.position = position;
     }
 
-    public JLabel getImage() {
+    public BufferedImage getImage() {
         return image;
     }
 
-    public void setImage(JLabel image) {
+    public void setImage(BufferedImage image) {
         this.image = image;
     }
 }

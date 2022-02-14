@@ -1,7 +1,9 @@
 package com.example.sprites;
 
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 
+import com.example.GamePanel;
 import com.example.IPhysicsObject;
 import com.example.utility.Vector2D;
 
@@ -10,7 +12,7 @@ public class Player extends Sprite implements IPhysicsObject {
     public static final int WIDTH = 70;
     public static final int HEIGHT = 74;
 
-    public final int GRAVITY = 2;
+    public final int GRAVITY = 1;
 
     private Boolean isFalling;
     private Vector2D momentum;
@@ -45,9 +47,8 @@ public class Player extends Sprite implements IPhysicsObject {
         // Move the player
         position.translate(momentum.getX(), momentum.getY());
 
-        // Update both the hitbox and the image
+        // Update the hitbox
         hitBox.setBounds(position.getX(), position.getY(), WIDTH, HEIGHT);
-        image.setBounds(hitBox);
     }
 
     /**
@@ -87,6 +88,10 @@ public class Player extends Sprite implements IPhysicsObject {
         if (!collision) {
             isFalling = true;
         }
+    }
+
+    public void draw(Graphics2D graphics) {
+        graphics.drawImage(image, position.getX(), position.getY(), GamePanel.TILESIZE, GamePanel.TILESIZE, null);
     }
 
     // Getters and setters

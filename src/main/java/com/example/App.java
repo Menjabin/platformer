@@ -1,6 +1,5 @@
 package com.example;
 
-import java.awt.*;
 import javax.swing.*;
 
 import com.example.sprites.Player;
@@ -23,28 +22,14 @@ public class App {
         window.add(gamePanel);
 
         window.pack();
-
-        // Create a canvas and add it to the panel
-        //Canvas canvas = new Canvas();
-        //canvas.setBounds(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
-        //canvas.setIgnoreRepaint(false);
-        
-        //gamePanel.add(canvas);
         
         // Display the window
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
-        // Define the buffer strategy
-        //canvas.createBufferStrategy(2);
+        player = gamePanel.player;
         
-        //canvas.requestFocus();
-
-        //player = gamePanel.player;
-        
-        // Add our custom keylistener
         keyRight = keyLeft = false;
-        //canvas.addKeyListener(new KeyboardListener(player));
 
         gamePanel.startGameThread();
     }

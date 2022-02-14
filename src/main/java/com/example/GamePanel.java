@@ -23,6 +23,8 @@ public class GamePanel extends JPanel implements Runnable {
     Player player;
     Level level;
 
+    int FPS = 60;
+
     Thread gameThread;
 
     /**
@@ -42,16 +44,28 @@ public class GamePanel extends JPanel implements Runnable {
         setDoubleBuffered(true);
 
         // Create the player and add it to the panel
-        player = new Player(new Vector2D(380, 10), "player.png");
-        add(player.getImage());
+        player = new Player(new Vector2D(100, 10), "player.png");
                 
         // Generate the level and add all of the sprites to the panel
         level = new Level();
         level.generateLevel();
+
+        // Create a canvas and add it to the panel
+        //Canvas canvas = new Canvas();
+        //canvas.setBounds(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
+        //canvas.setIgnoreRepaint(false);
+        
+        //add(canvas);
+
+        // Define the buffer strategy
+        //canvas.createBufferStrategy(2);
+        
+        //canvas.requestFocus();
                 
-        for (Sprite sprite : level.getSprites()) {
-            add(sprite.getImage());
-        }
+        // Add our custom keylistener
+        addKeyListener(new KeyboardListener(player));
+
+        requestFocus();
     }
 
     /**
@@ -96,11 +110,21 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
+        double drawInterval = 1000000000 / FPS;
+        double delta = 0;
+        long lastTime = System.nanoTime();
+        long currentTime;
+
         while (gameThread != null) {
-            // Update game logic
-            update();
-            // Paint everything again
-            repaint();
+            currentTime = System.nanoTime();
+            delta += (currentTime - lastTime) / drawInterval;
+            lastTime = currentTime;
+
+            if (delta >= 1) {
+                update();
+                repaint();
+                delta--;
+            }
         }
     }
 
@@ -109,8 +133,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D graphics2d = (Graphics2D) graphics;
 
-        graphics2d.setColor(Color.white);
-        graphics2d.fillRect(100, 100, TILESIZE, TILESIZE);
+        player.draw(graphics2d);
 
         graphics2d.dispose();
     }
