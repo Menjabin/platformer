@@ -9,8 +9,8 @@ import com.example.utility.Vector2D;
 
 public class Player extends Entity {
     // Width and height of the player
-    public static final int WIDTH = GamePanel.TILESIZE;
-    public static final int HEIGHT = GamePanel.TILESIZE;
+    public static final int WIDTH = GamePanel.tileSize;
+    public static final int HEIGHT = GamePanel.tileSize;
 
     public final int GRAVITY = 2;
 
@@ -34,7 +34,7 @@ public class Player extends Entity {
     }
 
     /**
-     * Update the player's momentum and position
+     * Update the player's size, momentum and position
      */
     public void update() {
         if (isFalling) {
@@ -50,7 +50,7 @@ public class Player extends Entity {
      */
     public void jump() {
         if (!isFalling) {
-            momentum.setY(-30);
+            momentum.setY(-20);
         }
 
         isFalling = true;
@@ -89,7 +89,7 @@ public class Player extends Entity {
      * @param graphics The graphics where we will draw the player
      */
     public void draw(Graphics2D graphics) {
-        graphics.drawImage(image, position.getX(), position.getY(), GamePanel.TILESIZE, GamePanel.TILESIZE, null);
+        graphics.drawImage(image, position.getX(), position.getY(), GamePanel.tileSize, GamePanel.tileSize, null);
     }
 
     // Getters and setters

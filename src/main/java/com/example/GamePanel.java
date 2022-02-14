@@ -10,9 +10,9 @@ import com.example.utility.Vector2D;
 public class GamePanel extends JPanel implements Runnable {
     // Tile and window dimensions
     public static final int ACTUALTILESIZE = 16;
-    public static final int SCALE = 1;
+    public static int scale = 1;
 
-    public static final int TILESIZE = ACTUALTILESIZE * SCALE;
+    public static int tileSize = ACTUALTILESIZE * scale;
 
     public static final int MAXSCREENCOL = 40;
     public static final int MAXSCREENROW = 23;
@@ -20,11 +20,16 @@ public class GamePanel extends JPanel implements Runnable {
     public static final int WIDTH = 640;
     public static final int HEIGHT = 360;
 
+    public int width = WIDTH;
+    public int height = HEIGHT;
+
     public static Boolean keyRight;
     public static Boolean keyLeft;
 
     Player player;
     Level level;
+
+    JFrame window;
 
     int FPS = 60;
 
@@ -34,8 +39,12 @@ public class GamePanel extends JPanel implements Runnable {
      * Creates a JPanel which is where the game will happen
      * Creates the player and the current level
      * Adds our custom keylistener for input
+     * 
+     * @param window The main window
      */
-    public GamePanel() {
+    public GamePanel(JFrame window) {
+        this.window = window;
+
         // Configure this panel
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setBackground(new Color(173, 216, 230));
@@ -50,9 +59,36 @@ public class GamePanel extends JPanel implements Runnable {
 
         // Add our custom keylistener
         keyRight = keyLeft = false;
-        addKeyListener(new KeyboardListener(player));
+        addKeyListener(new KeyboardListener(this, player));
 
         setFocusable(true);
+    }
+
+    /**
+     * Check if the screen has been resized.
+     * Adjust the scale if the screen is large or small enough.
+     * If the screen is not large or small enough to change scale, just add black borders
+     */
+    public void updateScreenSize() {
+        Dimension currentSize = getSize();
+        
+        if (currentSize.getWidth() > width && currentSize.getHeight() > height) {
+            // Full HD
+            if (currentSize.width / WIDTH >= 3 && 4 > currentSize.width / WIDTH) {
+                if (currentSize.height / HEIGHT >= 3 && 4 > currentSize.height / HEIGHT) {
+                    scale = currentSize.width % WIDTH;
+                    tileSize = ACTUALTILESIZE * scale;
+                }
+            } else if (currentSize.width / WIDTH >= 2 && 3 > currentSize.width / WIDTH) {
+                if (currentSize.height / HEIGHT >= 2 && 3 > currentSize.height / HEIGHT) {
+                    scale = currentSize.width % WIDTH;
+                    tileSize = ACTUALTILESIZE * scale;
+                }
+            }
+
+        }
+
+        // Up the scale if the size is larger than a multiple of the original resolution.
     }
 
     /**
@@ -117,6 +153,7 @@ public class GamePanel extends JPanel implements Runnable {
      * Checks for collisions between the player and the level tiles
      */
     public void update() {
+        updateScreenSize();
         moveCamera();
         player.update();
         player.checkCollision(level.getTiles());

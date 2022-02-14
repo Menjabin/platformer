@@ -12,7 +12,7 @@ public class App {
         window.setTitle("Platformer");
 
         // The game panel controls game logic and rendering
-        GamePanel gamePanel = new GamePanel();
+        GamePanel gamePanel = new GamePanel(window);
         window.add(gamePanel);
 
         window.pack();

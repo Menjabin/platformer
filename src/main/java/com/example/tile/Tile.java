@@ -48,7 +48,7 @@ public class Tile {
      * @param graphics The graphics to draw the tile on
      */
     public void draw(Graphics2D graphics) {
-        graphics.drawImage(image, position.getX(), position.getY(), GamePanel.TILESIZE, GamePanel.TILESIZE, null);
+        graphics.drawImage(image, position.getX(), position.getY(), GamePanel.tileSize, GamePanel.tileSize, null);
     }
 
     // Getters and setters

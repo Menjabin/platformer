@@ -1,19 +1,31 @@
 package com.example;
 
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.*;
 
 import com.example.entity.Player;
 
 public class KeyboardListener implements KeyListener {
-    private Player player;
+    GamePanel gamePanel;
+    Player player;
+
+    Boolean fullScreen;
+
+    GraphicsDevice device;
 
     /**
      * Takes the player as an argument in order to perform actions on it
      * 
+     * @param gamePanel The game panel
      * @param player The player
      */
-    KeyboardListener(Player player) {
+    KeyboardListener(GamePanel gamePanel, Player player) {
+        this.gamePanel = gamePanel;
         this.player = player;
+
+        fullScreen = false;
+        device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
     }
 
     /**
@@ -26,6 +38,16 @@ public class KeyboardListener implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
+            // Menu and special controls
+            case KeyEvent.VK_F11:
+                fullScreen = !fullScreen;
+
+                if (fullScreen) {
+                    device.setFullScreenWindow(gamePanel.window);
+                } else {
+                    device.setFullScreenWindow(null);
+                }
+            // Controls
             case KeyEvent.VK_SPACE:
                 player.jump();
                 return;
