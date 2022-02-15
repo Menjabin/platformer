@@ -4,8 +4,7 @@ Platformer game for my university assignment
 
 <b>TODO</b>
 
-1. Divide the game window into 16x16 chunks
-2. Create tiles to populate the level
-3. Create decorations that fit the tiling
-4. Create a cool background
-5. Create a new player
+1. Create tiles to populate the level
+2. Create decorations that fit the tiling
+3. Create a cool background
+4. Create a new player
