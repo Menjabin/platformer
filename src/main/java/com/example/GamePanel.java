@@ -9,10 +9,7 @@ import com.example.utility.Vector2D;
 
 public class GamePanel extends JPanel implements Runnable {
     // Tile and window dimensions
-    public static final int ACTUALTILESIZE = 16;
-    public static int scale = 1;
-
-    public static int tileSize = ACTUALTILESIZE * scale;
+    public static final int TILESIZE = 16;
 
     public static final int MAXSCREENCOL = 40;
     public static final int MAXSCREENROW = 23;
@@ -32,6 +29,7 @@ public class GamePanel extends JPanel implements Runnable {
     JFrame window;
 
     int FPS = 60;
+    static int scale = 1;
 
     Thread gameThread;
 
@@ -51,7 +49,7 @@ public class GamePanel extends JPanel implements Runnable {
         setDoubleBuffered(true);
 
         // Create the player
-        player = new Player(new Vector2D(100, 50), "player.png");
+        player = new Player(new Vector2D(WIDTH / 2, HEIGHT / 2), "player.png");
 
         // Generate the level
         level = new Level();
@@ -75,20 +73,7 @@ public class GamePanel extends JPanel implements Runnable {
         int scaleX = (int) currentSize.getWidth() / (WIDTH);
         int scaleY = (int) currentSize.getHeight() / (HEIGHT);
 
-        int prevScale = scale;
-        int newScale = Math.min(scaleX, scaleY);
-
-        //JPanel oldPanel = this.scale
-
-        /*
-        if (scale != prevScale) {
-            player.resize();
-            for (Tile tile : level.getTiles()) {
-                tile.resize();
-            }
-        }
-        */
-        // Up the scale if the size is larger than a multiple of the original resolution.
+        scale = Math.min(scaleX, scaleY);
     }
 
     /**
@@ -113,6 +98,9 @@ public class GamePanel extends JPanel implements Runnable {
         } 
     }
 
+    /**
+     * Start the game
+     */
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
@@ -189,15 +177,5 @@ public class GamePanel extends JPanel implements Runnable {
      */
     public static int translateToScale(int value) {
         return value * scale;
-    }
-
-    /**
-     * Adjusts the input value to the window scale
-     * 
-     * @param value The value to translate
-     * @return The input value adjusted to the current scale of the window
-     */
-    public static Vector2D translateToScale(Vector2D value) {
-        return new Vector2D(value.getX() * scale, value.getY() * scale);
     }
 }
