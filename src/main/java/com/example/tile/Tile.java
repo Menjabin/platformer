@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import com.example.GamePanel;
 import com.example.utility.FileLoader;
 import com.example.utility.Vector2D;
 
@@ -49,7 +50,13 @@ public class Tile {
      * @param graphics The graphics to draw the tile on
      */
     public void draw(Graphics2D graphics) {
-        graphics.drawImage(image, position.getX(), position.getY(), size.getX(), size.getY(), null);
+        graphics.drawImage(image, 
+            GamePanel.translateToScale(position.getX()), 
+            GamePanel.translateToScale(position.getY()), 
+            GamePanel.translateToScale(size.getX()), 
+            GamePanel.translateToScale(size.getY()), 
+            null
+        );
     }
 
     // Getters and setters

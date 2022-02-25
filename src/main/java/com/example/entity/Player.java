@@ -9,8 +9,8 @@ import com.example.utility.Vector2D;
 
 public class Player extends Entity {
     // Width and height of the player
-    public static final int WIDTH = GamePanel.ACTUALTILESIZE;
-    public static final int HEIGHT = GamePanel.ACTUALTILESIZE;
+    public static final int WIDTH = GamePanel.TILESIZE;
+    public static final int HEIGHT = GamePanel.TILESIZE;
 
     public static final int GRAVITY = 2;
 
@@ -89,7 +89,13 @@ public class Player extends Entity {
      * @param graphics The graphics where we will draw the player
      */
     public void draw(Graphics2D graphics) {
-        graphics.drawImage(image, position.getX(), position.getY(), size.getX(), size.getY(), null);
+        graphics.drawImage(image, 
+            GamePanel.translateToScale(position.getX()), 
+            GamePanel.translateToScale(position.getY()), 
+            GamePanel.translateToScale(size.getX()), 
+            GamePanel.translateToScale(size.getY()), 
+            null
+        );
     }
 
     // Getters and setters

@@ -45,7 +45,7 @@ public class Level {
      * Loops through the two dimensional array "layout", and generates the appropriate tiles
      */
     public void generateLevel() {
-        int tileSize = GamePanel.ACTUALTILESIZE;
+        int tileSize = GamePanel.TILESIZE;
 
         for (int y = 0; y < layout.size(); y++) {
             String[] row = layout.get(y);
