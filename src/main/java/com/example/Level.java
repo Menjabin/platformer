@@ -53,6 +53,9 @@ public class Level {
                 if (row[x].equals("1")) {
                     tiles.add(new Tile(new Vector2D(x * tileSize, y * tileSize), new Vector2D(tileSize, tileSize), "grass.png"));
                 }
+                if (row[x].equals("2")) {
+                    System.out.println("test");
+                }
             }
         }
     }
