@@ -1,10 +1,11 @@
-package com.example;
+package com.example.level;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import com.example.GamePanel;
 import com.example.tile.Tile;
 import com.example.utility.FileLoader;
 import com.example.utility.Vector2D;
@@ -20,7 +21,7 @@ public class Level {
     /**
      * Read the level file and store the data in the layout array
      */
-    Level() {
+    public Level() {
         File file = new FileLoader().readFile("levels/level1.tmx");
 
         try {

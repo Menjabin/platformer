@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import com.example.entity.Player;
+import com.example.level.Level;
 import com.example.tile.Tile;
 import com.example.utility.Vector2D;
 

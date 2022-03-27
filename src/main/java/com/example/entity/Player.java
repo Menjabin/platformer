@@ -10,7 +10,7 @@ import com.example.utility.Vector2D;
 public class Player extends Entity {
     // Width and height of the player
     public static final int WIDTH = GamePanel.TILESIZE;
-    public static final int HEIGHT = GamePanel.TILESIZE;
+    public static final int HEIGHT = GamePanel.TILESIZE * 2;
 
     public static final int GRAVITY = 2;
 
