@@ -1,6 +1,6 @@
-package com.example.entity;
+package com.example.model.entity;
 
-import com.example.tile.Tile;
+import com.example.model.tile.Tile;
 import com.example.utility.Vector2D;
 
 public class Tree extends Tile {

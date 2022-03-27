@@ -1,12 +1,12 @@
-package com.example.tile;
+package com.example.model.tile;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import com.example.GamePanel;
 import com.example.utility.FileLoader;
 import com.example.utility.Vector2D;
+import com.example.view.View;
 
 public class Tile {
     Vector2D position;
@@ -51,10 +51,10 @@ public class Tile {
      */
     public void draw(Graphics2D graphics) {
         graphics.drawImage(image, 
-            GamePanel.translateToScale(position.getX()), 
-            GamePanel.translateToScale(position.getY()), 
-            GamePanel.translateToScale(size.getX()), 
-            GamePanel.translateToScale(size.getY()), 
+            View.translateToScale(position.getX()), 
+            View.translateToScale(position.getY()), 
+            View.translateToScale(size.getX()), 
+            View.translateToScale(size.getY()), 
             null
         );
     }

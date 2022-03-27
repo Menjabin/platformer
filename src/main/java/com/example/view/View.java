@@ -1,13 +1,15 @@
-package com.example;
+package com.example.view;
 
 import java.awt.*;
 import javax.swing.*;
 
-import com.example.entity.Player;
-import com.example.tile.Tile;
+import com.example.controller.Controller;
+import com.example.model.Level;
+import com.example.model.entity.Player;
+import com.example.model.tile.Tile;
 import com.example.utility.Vector2D;
 
-public class GamePanel extends JPanel implements Runnable {
+public class View extends JPanel implements Runnable {
     // Tile and window dimensions
     public static final int TILESIZE = 16;
 
@@ -26,7 +28,7 @@ public class GamePanel extends JPanel implements Runnable {
     Player player;
     Level level;
 
-    JFrame window;
+    public JFrame window;
 
     int FPS = 60;
     static int scale = 1;
@@ -40,7 +42,7 @@ public class GamePanel extends JPanel implements Runnable {
      * 
      * @param window The main window
      */
-    public GamePanel(JFrame window) {
+    public View(JFrame window) {
         this.window = window;
 
         // Configure this panel
@@ -57,7 +59,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         // Add our custom keylistener
         keyRight = keyLeft = false;
-        addKeyListener(new KeyboardListener(this, player));
+        addKeyListener(new Controller(this, player));
 
         setFocusable(true);
     }

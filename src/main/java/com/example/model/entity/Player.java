@@ -1,16 +1,16 @@
-package com.example.entity;
+package com.example.model.entity;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import com.example.GamePanel;
-import com.example.tile.Tile;
+import com.example.model.tile.Tile;
 import com.example.utility.Vector2D;
+import com.example.view.View;
 
 public class Player extends Entity {
     // Width and height of the player
-    public static final int WIDTH = GamePanel.TILESIZE;
-    public static final int HEIGHT = GamePanel.TILESIZE;
+    public static final int WIDTH = View.TILESIZE;
+    public static final int HEIGHT = View.TILESIZE;
 
     public static final int GRAVITY = 2;
 
@@ -90,10 +90,10 @@ public class Player extends Entity {
      */
     public void draw(Graphics2D graphics) {
         graphics.drawImage(image, 
-            GamePanel.translateToScale(position.getX()), 
-            GamePanel.translateToScale(position.getY()), 
-            GamePanel.translateToScale(size.getX()), 
-            GamePanel.translateToScale(size.getY()), 
+            View.translateToScale(position.getX()), 
+            View.translateToScale(position.getY()), 
+            View.translateToScale(size.getX()), 
+            View.translateToScale(size.getY()), 
             null
         );
     }

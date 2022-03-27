@@ -1,13 +1,14 @@
-package com.example;
+package com.example.controller;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.*;
 
-import com.example.entity.Player;
+import com.example.model.entity.Player;
+import com.example.view.View;
 
-public class KeyboardListener implements KeyListener {
-    GamePanel gamePanel;
+public class Controller implements KeyListener {
+    View gamePanel;
     Player player;
 
     Boolean fullScreen;
@@ -20,7 +21,7 @@ public class KeyboardListener implements KeyListener {
      * @param gamePanel The game panel
      * @param player The player
      */
-    KeyboardListener(GamePanel gamePanel, Player player) {
+    public Controller(View gamePanel, Player player) {
         this.gamePanel = gamePanel;
         this.player = player;
 
@@ -53,17 +54,17 @@ public class KeyboardListener implements KeyListener {
                 return;
             // The left key (left arrow or a) is down
             case KeyEvent.VK_LEFT:
-                GamePanel.keyLeft = true;
+                View.keyLeft = true;
                 return;
             case KeyEvent.VK_A:
-                GamePanel.keyLeft = true;
+                View.keyLeft = true;
                 return;
             // The right key (right arrow or d) is down
             case KeyEvent.VK_RIGHT:
-                GamePanel.keyRight = true;
+                View.keyRight = true;
                 return;
             case KeyEvent.VK_D:
-                GamePanel.keyRight = true;
+                View.keyRight = true;
                 return;
         }
     }
@@ -79,17 +80,17 @@ public class KeyboardListener implements KeyListener {
         switch (e.getKeyCode()) {
             // The left key (left arrow or a) is down
             case KeyEvent.VK_LEFT:
-                GamePanel.keyLeft = false;
+                View.keyLeft = false;
                 return;
             case KeyEvent.VK_A:
-                GamePanel.keyLeft = false;
+                View.keyLeft = false;
                 return;
             // The right key (right arrow or d) is down
             case KeyEvent.VK_RIGHT:
-                GamePanel.keyRight = false;
+                View.keyRight = false;
                 return;
             case KeyEvent.VK_D:
-                GamePanel.keyRight = false;
+                View.keyRight = false;
                 return;
         }
     }

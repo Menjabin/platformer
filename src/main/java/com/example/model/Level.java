@@ -1,13 +1,14 @@
-package com.example;
+package com.example.model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.example.tile.Tile;
+import com.example.model.tile.Tile;
 import com.example.utility.FileLoader;
 import com.example.utility.Vector2D;
+import com.example.view.View;
 
 public class Level {
     // Two dimensional array list for storing the level layout
@@ -20,7 +21,7 @@ public class Level {
     /**
      * Read the level file and store the data in the layout array
      */
-    Level() {
+    public Level() {
         File file = new FileLoader().readFile("levels/level1.tmx");
 
         try {
@@ -30,7 +31,7 @@ public class Level {
                 sc.nextLine();
             }
 
-            for (int i = 0; i < GamePanel.MAXSCREENROW; i++) {
+            for (int i = 0; i < View.MAXSCREENROW; i++) {
                 layout.add(sc.nextLine().split(","));
             }
 
@@ -45,7 +46,7 @@ public class Level {
      * Loops through the two dimensional array "layout", and generates the appropriate tiles
      */
     public void generateLevel() {
-        int tileSize = GamePanel.TILESIZE;
+        int tileSize = View.TILESIZE;
 
         for (int y = 0; y < layout.size(); y++) {
             String[] row = layout.get(y);

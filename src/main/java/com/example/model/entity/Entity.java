@@ -1,4 +1,4 @@
-package com.example.entity;
+package com.example.model.entity;
 
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;

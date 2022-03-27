@@ -2,6 +2,8 @@ package com.example;
 
 import javax.swing.*;
 
+import com.example.view.View;
+
 public class App {
     public static void main(String[] args) {
         JFrame window = new JFrame();
@@ -12,7 +14,7 @@ public class App {
         window.setTitle("Platformer");
 
         // The game panel controls game logic and rendering
-        GamePanel gamePanel = new GamePanel(window);
+        View gamePanel = new View(window);
         window.add(gamePanel);
 
         window.pack();
