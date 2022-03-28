@@ -41,6 +41,23 @@ public class Vector2D {
         return (int) Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (!(obj instanceof Vector2D)) {
+            return false;
+        }
+
+        Vector2D vector2dObject = (Vector2D) obj;
+        return this.x == vector2dObject.x && this.y == vector2dObject.y;
+    }
+
     // Getters and setters
 
     public int getX() {

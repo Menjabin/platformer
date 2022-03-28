@@ -6,11 +6,11 @@ import java.awt.image.BufferedImage;
 
 import com.example.utility.FileLoader;
 import com.example.utility.Vector2D;
-import com.example.view.View;
 
 public class Tile {
     Vector2D position;
     Vector2D size;
+    String asset;
 
     BufferedImage image;
     Rectangle hitBox;
@@ -24,6 +24,7 @@ public class Tile {
     public Tile(Vector2D position, Vector2D size, String asset) {
         this.position = position;
         this.size = size;
+        this.asset = asset;
 
         // Load the image
         image = new FileLoader().loadImage("assets/" + asset);
@@ -49,17 +50,30 @@ public class Tile {
      * 
      * @param graphics The graphics to draw the tile on
      */
-    public void draw(Graphics2D graphics) {
-        graphics.drawImage(image, 
-            View.translateToScale(position.getX()), 
-            View.translateToScale(position.getY()), 
-            View.translateToScale(size.getX()), 
-            View.translateToScale(size.getY()), 
+    public void draw(Graphics2D g) {
+        g.drawImage(image, 
+            position.getX(), 
+            position.getY(), 
+            size.getX(), 
+            size.getY(), 
             null
         );
     }
 
     // Getters and setters
+
+    public Vector2D getPosition() {
+        return position;
+    }
+
+    public Vector2D getSize() {
+        return size;
+    }
+
+    public String getAsset() {
+        return asset;
+    }
+
     public Rectangle getHitBox() {
         return hitBox;
     }

@@ -22,8 +22,8 @@ public class Player extends Entity {
      * @param position The starting position of the player
      * @param asset The name of the player image file including the file extension
      */
-    public Player(Vector2D position, String asset) {
-        super(position, new Vector2D(WIDTH, HEIGHT), asset);
+    public Player(Vector2D position) {
+        super(position, new Vector2D(WIDTH, HEIGHT), "player.png");
 
         // The player is always falling at the start of the game
         isFalling = true;
@@ -55,6 +55,18 @@ public class Player extends Entity {
         isFalling = true;
     }
 
+    public Boolean isCollidingWithTiles(ArrayList<Tile> tiles) {
+        for (Tile tile : tiles) {
+            if (tile.getHitBox() != null) {
+                if (this.hitBox.intersects(tile.getHitBox())) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Check whether the player is colliding with any of the tiles in others
      * 
@@ -83,10 +95,6 @@ public class Player extends Entity {
     }
 
     // Getters and setters
-
-    public Vector2D getmomentum() {
-        return momentum;
-    }
 
     public Vector2D getPosition() {
         return position;

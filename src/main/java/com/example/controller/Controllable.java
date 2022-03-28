@@ -7,4 +7,6 @@ public interface Controllable {
     public void move(Vector2D movement);
 
     public void jump();
+
+    public void update();
 }

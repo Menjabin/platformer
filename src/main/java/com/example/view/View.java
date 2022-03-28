@@ -70,16 +70,11 @@ public class View extends JPanel {
 
         Graphics2D graphics = (Graphics2D) g;
 
-        drawPlayer(g);
-
-        for (Tile tile : model.getTiles()) {
-            tile.draw(graphics);
-        }
-
-        graphics.dispose();
+        drawPlayer(graphics);
+        drawLevel(graphics);
     }
 
-    public void drawPlayer(Graphics g) {
+    public void drawPlayer(Graphics2D g) {
         Player player = model.getPlayer();
 
         g.drawImage(player.getImage(), 
@@ -88,7 +83,13 @@ public class View extends JPanel {
             translateToScale(Player.WIDTH), 
             translateToScale(Player.HEIGHT), 
         null
-    );
+        );
+    }
+
+    public void drawLevel(Graphics2D g) {
+        for (Tile tile : model.getTiles()) {
+            tile.draw(g);
+        }
     }
 
     /**
@@ -100,30 +101,4 @@ public class View extends JPanel {
     public static int translateToScale(int value) {
         return value * scale;
     }
-
-
-    /**
-    public void run() {
-        // How long between each frame
-        double drawInterval = 1000000000 / FPS;
-        // Helper variables to control FPS
-        double delta = 0;
-        long lastTime = System.nanoTime();
-        long currentTime;
-
-        // Run this as long as the game is running
-        while (gameThread != null) {
-            currentTime = System.nanoTime();
-            delta += (currentTime - lastTime) / drawInterval;
-            lastTime = currentTime;
-
-            if (delta >= 1) {
-                // The main game loop
-                update();
-                repaint();
-                delta--;
-            }
-        }
-    }
-    */
 }

@@ -14,7 +14,7 @@ public class App {
         Model model = new Model();
         View view = new View(model);
 
-        new Controller(view, model);
+        Controller controller = new Controller(view, model);
 
         JFrame frame = new JFrame(WINDOW_TITLE);
 
@@ -27,5 +27,7 @@ public class App {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+
+        controller.start();
     }
 }

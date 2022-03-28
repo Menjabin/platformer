@@ -11,9 +11,11 @@ public class Model implements Viewable, Controllable {
     Player player;
     Level level;
 
+    Vector2D momentum = new Vector2D();
+
     public Model() {
         // Create the player
-        player = new Player(new Vector2D(10, 10), "player.png");
+        player = new Player(new Vector2D(10, 10));
 
         // Generate the level
         level = new Level();
@@ -30,6 +32,7 @@ public class Model implements Viewable, Controllable {
         //player.update();
 
         player.checkCollision(level.getTiles());
+        level.move(momentum);
     }
 
     /**
@@ -38,12 +41,7 @@ public class Model implements Viewable, Controllable {
      */
     @Override
     public void move(Vector2D movement) {
-        // Move all the sprites in the level
-        for (Tile tile : level.getTiles()) {
-            tile.move(movement.getX() * 10, 0);
-        }
-
-        update();
+        momentum = new Vector2D(movement.getX() * 10, movement.getY() * 10);
     }
 
     @Override

@@ -61,6 +61,38 @@ public class Level {
         }
     }
 
+    /**
+     * Returns a copy of this level where all tiles are moved
+     * 
+     * @param movement movement in x and y direction
+     * @return a copy of this level
+     */
+    public ArrayList<Tile> movedCopy(Vector2D movement) {
+        ArrayList<Tile> tilesCopy = new ArrayList<Tile>();
+
+        for (Tile tile : tiles) {
+            Vector2D positionCopy = new Vector2D(
+                tile.getPosition().getX() + movement.getX(),
+                tile.getPosition().getY() + movement.getY()   
+            );
+
+            tilesCopy.add(new Tile(positionCopy, tile.getSize(), tile.getAsset()));
+        }
+
+        return tilesCopy;
+    }
+
+    /**
+     * Move the level
+     * 
+     * @param movement movement in x and y direction
+     */
+    public void move(Vector2D movement) {
+        for (Tile tile : tiles) {
+            tile.move(movement.getX(), movement.getY());
+        }
+    }
+
     // Getters and setters
 
     public ArrayList<Tile> getTiles() {
