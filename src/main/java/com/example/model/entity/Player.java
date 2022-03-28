@@ -1,6 +1,5 @@
 package com.example.model.entity;
 
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import com.example.model.tile.Tile;
@@ -81,21 +80,6 @@ public class Player extends Entity {
         if (!collision) {
             isFalling = true;
         }
-    }
-
-    /**
-     * Draw the player image
-     * 
-     * @param graphics The graphics where we will draw the player
-     */
-    public void draw(Graphics2D graphics) {
-        graphics.drawImage(image, 
-            View.translateToScale(position.getX()), 
-            View.translateToScale(position.getY()), 
-            View.translateToScale(size.getX()), 
-            View.translateToScale(size.getY()), 
-            null
-        );
     }
 
     // Getters and setters

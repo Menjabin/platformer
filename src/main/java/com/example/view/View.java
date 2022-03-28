@@ -3,13 +3,14 @@ package com.example.view;
 import java.awt.*;
 import javax.swing.*;
 
-import com.example.controller.Controller;
-import com.example.model.Level;
 import com.example.model.entity.Player;
 import com.example.model.tile.Tile;
-import com.example.utility.Vector2D;
 
-public class View extends JPanel implements Runnable {
+public class View extends JPanel {
+    {
+        this.setFocusable(true);
+    }
+
     // Tile and window dimensions
     public static final int TILESIZE = 16;
 
@@ -22,18 +23,10 @@ public class View extends JPanel implements Runnable {
     public int width = WIDTH;
     public int height = HEIGHT;
 
-    public static Boolean keyRight;
-    public static Boolean keyLeft;
-
-    Player player;
-    Level level;
-
-    public JFrame window;
+    Viewable model;
 
     int FPS = 60;
     static int scale = 1;
-
-    Thread gameThread;
 
     /**
      * Creates a JPanel which is where the game will happen
@@ -42,26 +35,13 @@ public class View extends JPanel implements Runnable {
      * 
      * @param window The main window
      */
-    public View(JFrame window) {
-        this.window = window;
+    public View(Viewable model) {
+        this.model = model;
 
         // Configure this panel
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setBackground(new Color(173, 216, 230));
         setDoubleBuffered(true);
-
-        // Create the player
-        player = new Player(new Vector2D(WIDTH / 2, HEIGHT / 2), "player.png");
-
-        // Generate the level
-        level = new Level();
-        level.generateLevel();
-
-        // Add our custom keylistener
-        keyRight = keyLeft = false;
-        addKeyListener(new Controller(this, player));
-
-        setFocusable(true);
     }
 
     /**
@@ -79,40 +59,50 @@ public class View extends JPanel implements Runnable {
     }
 
     /**
-     * Check which keys are pressed, and move the camera accordingly.
-     * The camera is not actually moved, we just move all the sprites other than the player
+     * Called every frame.
+     * 
+     * Paints all the tiles and entities.
+     * 
+     * @param g The graphics to draw this panel on
      */
-    public void moveCamera() {
-        Vector2D momentum = new Vector2D();
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
-        // Set the momentum
-        if (keyRight && keyLeft) {
-            momentum.setX(0);
-        } else if (keyRight) {
-            momentum.setX(-10);
-        } else if (keyLeft) {
-            momentum.setX(10);
+        Graphics2D graphics = (Graphics2D) g;
+
+        drawPlayer(g);
+
+        for (Tile tile : model.getTiles()) {
+            tile.draw(graphics);
         }
 
-        // Move all the sprites in the level
-        for (Tile tile : level.getTiles()) {
-            tile.move(momentum.getX(), 0);
-        } 
+        graphics.dispose();
+    }
+
+    public void drawPlayer(Graphics g) {
+        Player player = model.getPlayer();
+
+        g.drawImage(player.getImage(), 
+            translateToScale(player.getPosition().getX()), 
+            translateToScale(player.getPosition().getY()), 
+            translateToScale(Player.WIDTH), 
+            translateToScale(Player.HEIGHT), 
+        null
+    );
     }
 
     /**
-     * Start the game
+     * Adjusts the input value to the window scale
+     * 
+     * @param value The value to translate
+     * @return The input value adjusted to the current scale of the window
      */
-    public void startGameThread() {
-        gameThread = new Thread(this);
-        gameThread.start();
+    public static int translateToScale(int value) {
+        return value * scale;
     }
 
+
     /**
-     * Updates every tile and entity, and renders them onto the panel.
-     * Makes sure that the main game loop runs at a given FPS
-     */
-    @Override
     public void run() {
         // How long between each frame
         double drawInterval = 1000000000 / FPS;
@@ -135,49 +125,5 @@ public class View extends JPanel implements Runnable {
             }
         }
     }
-
-    /**
-     * Called every frame.
-     * 
-     * Updates the position of the camera and the player.
-     * Checks for collisions between the player and the level tiles
-     */
-    public void update() {
-        updateScreenSize();
-
-        moveCamera();
-        player.update();
-
-        player.checkCollision(level.getTiles());
-    }
-
-    /**
-     * Called every frame.
-     * 
-     * Paints all the tiles and entities.
-     * 
-     * @param g The graphics to draw this panel on
-     */
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        Graphics2D graphics = (Graphics2D) g;
-
-        player.draw(graphics);
-        for (Tile tile : level.getTiles()) {
-            tile.draw(graphics);
-        }
-
-        graphics.dispose();
-    }
-
-    /**
-     * Adjusts the input value to the window scale
-     * 
-     * @param value The value to translate
-     * @return The input value adjusted to the current scale of the window
-     */
-    public static int translateToScale(int value) {
-        return value * scale;
-    }
+    */
 }

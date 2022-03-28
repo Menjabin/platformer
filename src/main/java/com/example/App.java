@@ -2,28 +2,30 @@ package com.example;
 
 import javax.swing.*;
 
+import com.example.controller.Controller;
+import com.example.model.Model;
 import com.example.view.View;
 
 public class App {
+
+    public static final String WINDOW_TITLE = "Platformer";
+
     public static void main(String[] args) {
-        JFrame window = new JFrame();
+        Model model = new Model();
+        View view = new View(model);
+
+        new Controller(view, model);
+
+        JFrame frame = new JFrame(WINDOW_TITLE);
 
         // Define window behavior
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(true);
-        window.setTitle("Platformer");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(true);
 
-        // The game panel controls game logic and rendering
-        View gamePanel = new View(window);
-        window.add(gamePanel);
+        frame.setContentPane(view);
 
-        window.pack();
-        
-        // Display the window
-        window.setLocationRelativeTo(null);
-        window.setVisible(true);
-
-        // Start the game
-        gamePanel.startGameThread();
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 }

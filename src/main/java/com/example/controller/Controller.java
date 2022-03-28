@@ -4,12 +4,13 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.*;
 
-import com.example.model.entity.Player;
+import com.example.model.Model;
+import com.example.utility.Vector2D;
 import com.example.view.View;
 
 public class Controller implements KeyListener {
-    View gamePanel;
-    Player player;
+    View view;
+    Controllable model;
 
     Boolean fullScreen;
 
@@ -18,12 +19,14 @@ public class Controller implements KeyListener {
     /**
      * Takes the player as an argument in order to perform actions on it
      * 
-     * @param gamePanel The game panel
+     * @param view The game panel
      * @param player The player
      */
-    public Controller(View gamePanel, Player player) {
-        this.gamePanel = gamePanel;
-        this.player = player;
+    public Controller(View view, Model model) {
+        this.view = view;
+        this.model = model;
+
+        view.addKeyListener(this);
 
         fullScreen = false;
         device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
@@ -38,61 +41,37 @@ public class Controller implements KeyListener {
      */
     @Override
     public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            // Menu and special controls
-            case KeyEvent.VK_F11:
-                fullScreen = !fullScreen;
+        Vector2D movement = new Vector2D();
 
-                if (fullScreen) {
-                    device.setFullScreenWindow(gamePanel.window);
-                } else {
-                    device.setFullScreenWindow(null);
-                }
+        switch (e.getKeyCode()) {
             // Controls
             case KeyEvent.VK_SPACE:
-                player.jump();
+                model.jump();
                 return;
             // The left key (left arrow or a) is down
             case KeyEvent.VK_LEFT:
-                View.keyLeft = true;
+                movement.setX(-1);
                 return;
             case KeyEvent.VK_A:
-                View.keyLeft = true;
+                movement.setX(-1);
                 return;
             // The right key (right arrow or d) is down
             case KeyEvent.VK_RIGHT:
-                View.keyRight = true;
+                movement.setX(1);
                 return;
             case KeyEvent.VK_D:
-                View.keyRight = true;
+                movement.setX(1);
                 return;
         }
+
+        model.move(movement);
+
+        view.repaint();
     }
 
-    /**
-     * Checks which keys that are released.
-     * Updates the values of GamePanel.keyLeft and GamePanel.keyRight
-     * 
-     * @param e The KeyEvent which holds information about which key was released
-     */
     @Override
     public void keyReleased(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            // The left key (left arrow or a) is down
-            case KeyEvent.VK_LEFT:
-                View.keyLeft = false;
-                return;
-            case KeyEvent.VK_A:
-                View.keyLeft = false;
-                return;
-            // The right key (right arrow or d) is down
-            case KeyEvent.VK_RIGHT:
-                View.keyRight = false;
-                return;
-            case KeyEvent.VK_D:
-                View.keyRight = false;
-                return;
-        }
+
     }
 
     @Override
