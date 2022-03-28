@@ -2,6 +2,7 @@ package com.example.model;
 
 import com.example.controller.Controllable;
 import com.example.model.entity.Player;
+import com.example.model.screen.GameScreen;
 import com.example.model.tile.Tile;
 import com.example.utility.Vector2D;
 import com.example.view.Viewable;
@@ -12,7 +13,11 @@ public class Model implements Viewable, Controllable {
     Level level;
 
     Vector2D momentum = new Vector2D();
+    GameScreen gameScreen;
 
+    /**
+     * The model is responsible for the game's logic
+     */
     public Model() {
         // Create the player
         player = new Player(new Vector2D(10, 10));
@@ -22,26 +27,17 @@ public class Model implements Viewable, Controllable {
         level.generateLevel();
     }
 
-    /**
-     * Called every frame.
-     * 
-     * Updates the position of the camera and the player.
-     * Checks for collisions between the player and the level tiles
-     */
+    @Override
     public void update() {
         //player.update();
 
         player.checkCollision(level.getTiles());
-        level.move(momentum);
+        level.move(new Vector2D(-momentum.getX(), -momentum.getY()));
     }
 
-    /**
-     * Check which keys are pressed, and move the camera accordingly.
-     * The camera is not actually moved, we just move all the sprites other than the player
-     */
     @Override
-    public void move(Vector2D movement) {
-        momentum = new Vector2D(movement.getX() * 10, movement.getY() * 10);
+    public void move(int dx, int dy) {
+        momentum = new Vector2D(dx * 10, dy * 10);
     }
 
     @Override
@@ -49,13 +45,25 @@ public class Model implements Viewable, Controllable {
         player.jump();
     }
 
+    // Getters and setters
+
     @Override
     public Iterable<Tile> getTiles() {
-        return level.getTiles();
+        return this.level.getTiles();
     }
 
     @Override
     public Player getPlayer() {
-        return player;
+        return this.player;
+    }
+
+    @Override
+    public void setGameScreen(GameScreen gameScreen) {
+        this.gameScreen = gameScreen;
+    }
+
+    @Override
+    public GameScreen getGameScreen() {
+        return this.gameScreen;
     }
 }

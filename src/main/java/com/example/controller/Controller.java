@@ -1,41 +1,38 @@
 package com.example.controller;
 
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.awt.event.*;
 
 import com.example.model.Model;
-import com.example.utility.Vector2D;
+import com.example.model.screen.GameScreen;
 import com.example.view.View;
 
 public class Controller implements KeyListener, Runnable {
     View view;
     Controllable model;
 
-    Boolean fullScreen;
-
-    GraphicsDevice device;
-
-    final int FPS = 60;
+    // FPS and game thread-related variables
     Thread gameThread;
     boolean isRunning = false;
+    private final int FPS = 60;
 
     /**
-     * Takes the player as an argument in order to perform actions on it
+     * The controller is responsible for updating the game 60 times per second.
+     * It tells the view when to repaint itself, and the model when to move its entities
      * 
      * @param view The game panel
-     * @param player The player
+     * @param model The model which contains the current level and player
      */
     public Controller(View view, Model model) {
         this.view = view;
         this.model = model;
 
         view.addKeyListener(this);
-
-        fullScreen = false;
-        device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
+        model.setGameScreen(GameScreen.MAIN_MENU);
     }
 
+    /**
+     * Start the game thread. This involves setting isRunning to true and creating a new thread
+     */
     public void start() {
         isRunning = true;
         gameThread = new Thread(this);
@@ -43,16 +40,13 @@ public class Controller implements KeyListener, Runnable {
     }
 
     /**
-     * Checks which keys that are pressed.
-     * Updates the values of GamePanel.keyLeft and GamePanel.keyRight.
-     * Calls player.jump() whenever the space key is pressed
-     * 
-     * @param e The KeyEvent which holds information about which key was pressed
+     * {@inheritDoc}
      */
     @Override
     public void keyPressed(KeyEvent e) {
-        Vector2D movement = new Vector2D();
+        int dx = 0;
 
+        // Adjust the movement according to the input
         switch (e.getKeyCode()) {
             // Controls
             case KeyEvent.VK_SPACE:
@@ -60,26 +54,45 @@ public class Controller implements KeyListener, Runnable {
                 break;
             // The left key (left arrow or a) is down
             case KeyEvent.VK_LEFT:
-                movement.setX(-1);
+                dx = -1;
                 break;
             case KeyEvent.VK_A:
-                movement.setX(-1);
+                dx = -1;
                 break;
             // The right key (right arrow or d) is down
             case KeyEvent.VK_RIGHT:
-                movement.setX(1);
+                dx = 1;
                 break;
             case KeyEvent.VK_D:
-                movement.setX(1);
+                dx = 1;
                 break;
         }
 
-        model.move(movement);
+        model.move(dx, 0);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void keyReleased(KeyEvent e) {
-
+        // Adjust the movement according to the input
+        switch (e.getKeyCode()) {
+            // The left key (left arrow or a) is released
+            case KeyEvent.VK_LEFT:
+                model.move(0, 0);
+                break;
+            case KeyEvent.VK_A:
+                model.move(0, 0);
+                break;
+            // The right key (right arrow or d) is released
+            case KeyEvent.VK_RIGHT:
+                model.move(0, 0);
+                break;
+            case KeyEvent.VK_D:
+                model.move(0, 0);
+                break;
+        }
     }
 
     @Override
@@ -87,6 +100,11 @@ public class Controller implements KeyListener, Runnable {
 
     }
 
+    /**
+     * Updates the game 60 times per second.
+     * Every update consists of telling the model to update the level, player and other entities,
+     * and telling the view to repaint itself
+     */
     @Override
     public void run() {
         // How long between each frame

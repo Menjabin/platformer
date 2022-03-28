@@ -8,6 +8,7 @@ import com.example.model.tile.Tile;
 
 public class View extends JPanel {
     {
+        // This will run at the very beginning of the program
         this.setFocusable(true);
     }
 
@@ -17,8 +18,8 @@ public class View extends JPanel {
     public static final int MAXSCREENCOL = 40;
     public static final int MAXSCREENROW = 23;
 
-    public static final int WIDTH = 640;
-    public static final int HEIGHT = 360;
+    public static final int WIDTH = 1200;
+    public static final int HEIGHT = 800;
 
     public int width = WIDTH;
     public int height = HEIGHT;
@@ -59,11 +60,9 @@ public class View extends JPanel {
     }
 
     /**
-     * Called every frame.
+     * Draws all the tiles and entities.
      * 
-     * Paints all the tiles and entities.
-     * 
-     * @param g The graphics to draw this panel on
+     * @param g the graphics object to draw this panel with
      */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -74,6 +73,11 @@ public class View extends JPanel {
         drawLevel(graphics);
     }
 
+    /**
+     * Draws the player
+     * 
+     * @param g the graphics object to draw with
+     */
     public void drawPlayer(Graphics2D g) {
         Player player = model.getPlayer();
 
@@ -86,6 +90,11 @@ public class View extends JPanel {
         );
     }
 
+    /**
+     * Draw the level
+     * 
+     * @param g the graphics object to draw with
+     */
     public void drawLevel(Graphics2D g) {
         for (Tile tile : model.getTiles()) {
             tile.draw(g);

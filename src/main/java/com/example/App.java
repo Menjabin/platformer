@@ -13,7 +13,6 @@ public class App {
     public static void main(String[] args) {
         Model model = new Model();
         View view = new View(model);
-
         Controller controller = new Controller(view, model);
 
         JFrame frame = new JFrame(WINDOW_TITLE);
@@ -22,6 +21,7 @@ public class App {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(true);
 
+        // Add the view to the main window
         frame.setContentPane(view);
 
         frame.pack();
