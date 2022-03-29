@@ -122,7 +122,7 @@ public class Controller implements KeyListener, Runnable {
 
             if (delta >= 1) {
                 // The main game loop
-                model.update();
+                model.tick();
                 view.repaint();
                 delta--;
             }

@@ -18,8 +18,8 @@ public class View extends JPanel {
     public static final int MAXSCREENCOL = 40;
     public static final int MAXSCREENROW = 23;
 
-    public static final int WIDTH = 1200;
-    public static final int HEIGHT = 800;
+    public static final int WIDTH = 1280;
+    public static final int HEIGHT = 736;
 
     public int width = WIDTH;
     public int height = HEIGHT;
@@ -27,7 +27,7 @@ public class View extends JPanel {
     Viewable model;
 
     int FPS = 60;
-    static int scale = 1;
+    static int scale = Math.min(WIDTH / (MAXSCREENCOL * TILESIZE), HEIGHT / (MAXSCREENROW * TILESIZE));
 
     /**
      * Creates a JPanel which is where the game will happen
@@ -82,11 +82,11 @@ public class View extends JPanel {
         Player player = model.getPlayer();
 
         g.drawImage(player.getImage(), 
-            translateToScale(player.getPosition().getX()), 
-            translateToScale(player.getPosition().getY()), 
-            translateToScale(Player.WIDTH), 
-            translateToScale(Player.HEIGHT), 
-        null
+            (int) player.getHitBox().getX() * scale, 
+            (int) player.getHitBox().getY() * scale, 
+            Player.WIDTH * scale, 
+            Player.HEIGHT * scale,
+            null
         );
     }
 
@@ -97,7 +97,13 @@ public class View extends JPanel {
      */
     public void drawLevel(Graphics2D g) {
         for (Tile tile : model.getTiles()) {
-            tile.draw(g);
+            g.drawImage(tile.getImage(), 
+                tile.getPositionX() * scale,
+                tile.getPositionY() * scale,
+                tile.getSize() * scale,
+                tile.getSize() * scale,
+                null
+            );
         }
     }
 

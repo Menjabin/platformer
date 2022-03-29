@@ -4,23 +4,22 @@ import com.example.controller.Controllable;
 import com.example.model.entity.Player;
 import com.example.model.screen.GameScreen;
 import com.example.model.tile.Tile;
-import com.example.utility.Vector2D;
 import com.example.view.Viewable;
 
 public class Model implements Viewable, Controllable {
     
-    Player player;
-    Level level;
+    private Player player;
+    private Level level;
 
-    Vector2D momentum = new Vector2D();
-    GameScreen gameScreen;
+    private int momentumX, momentumY;
+    private GameScreen gameScreen;
 
     /**
      * The model is responsible for the game's logic
      */
     public Model() {
         // Create the player
-        player = new Player(new Vector2D(10, 10));
+        player = new Player(100, 100);
 
         // Generate the level
         level = new Level();
@@ -28,16 +27,16 @@ public class Model implements Viewable, Controllable {
     }
 
     @Override
-    public void update() {
-        //player.update();
+    public void tick() {
+        player.tick(level.getTiles());
 
-        player.checkCollision(level.getTiles());
-        level.move(new Vector2D(-momentum.getX(), -momentum.getY()));
+        level.move(-momentumX, -momentumY);
     }
 
     @Override
     public void move(int dx, int dy) {
-        momentum = new Vector2D(dx * 10, dy * 10);
+        momentumX = dx * player.getSpeed();
+        momentumY = dy * player.getSpeed();
     }
 
     @Override

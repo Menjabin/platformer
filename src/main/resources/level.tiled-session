@@ -1,63 +1,26 @@
 {
-    "Map/SizeTest": {
-        "height": 4300,
-        "width": 2
-    },
     "activeFile": "levels/level1.tmx",
     "expandedProjectPaths": [
-        ".",
-        "levels"
     ],
+    "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "levels/grass.tsx": {
-<<<<<<< HEAD
             "scaleInDock": 1
         },
         "levels/level1.tmx": {
-            "scale": 1.0867,
+            "scale": 0.7536,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 90.1812827827367,
-                "y": 94.32226005337259
-=======
-            "scaleInDock": 1,
-            "scaleInEditor": 1
-        },
-        "levels/level1.tmx": {
-            "scale": 1,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 473,
-                "y": 218
->>>>>>> 8ffb8a54b6fdecbdee0c01bdc5ca797b3aa7db6b
+                "x": 660.828025477707,
+                "y": 289.94161358811044
             }
         }
     },
-    "last.imagePath": "C:/Users/benja/Documents/Programmering/platformer/src/main/resources/assets",
-    "map.height": 23,
-    "map.lastUsedFormat": "tmx",
-    "map.tileHeight": 16,
-    "map.tileWidth": 16,
-    "map.width": 60,
     "openFiles": [
-<<<<<<< HEAD
         "levels/level1.tmx"
     ],
-    "project": "level.tiled-project",
+    "project": "",
     "recentFiles": [
-=======
-        "levels/level1.tmx",
-        "levels/grass.tsx"
-    ],
-    "project": "level.tiled-project",
-    "recentFiles": [
-        "levels/grass.tsx",
->>>>>>> 8ffb8a54b6fdecbdee0c01bdc5ca797b3aa7db6b
         "levels/level1.tmx"
-    ],
-    "tileset.lastUsedFormat": "tsx",
-    "tileset.tileSize": {
-        "height": 16,
-        "width": 16
-    }
+    ]
 }

@@ -7,7 +7,6 @@ import java.util.Scanner;
 
 import com.example.model.tile.Tile;
 import com.example.utility.FileLoader;
-import com.example.utility.Vector2D;
 import com.example.view.View;
 
 public class Level {
@@ -27,6 +26,7 @@ public class Level {
         try {
             Scanner sc = new Scanner(file);
 
+            // Skip XML lines
             for (int i = 0; i < 5; i++) {
                 sc.nextLine();
             }
@@ -51,8 +51,9 @@ public class Level {
         for (int y = 0; y < layout.size(); y++) {
             String[] row = layout.get(y);
             for (int x = 0; x < row.length; x++) {
+                // Add the corresponding tiles to the grid
                 if (row[x].equals("1")) {
-                    tiles.add(new Tile(new Vector2D(x * tileSize, y * tileSize), new Vector2D(tileSize, tileSize), "grass.png"));
+                    tiles.add(new Tile(x * tileSize, y * tileSize, tileSize, "grass.png"));
                 }
                 if (row[x].equals("2")) {
                     System.out.println("test");
@@ -67,16 +68,16 @@ public class Level {
      * @param movement movement in x and y direction
      * @return a copy of this level
      */
-    public ArrayList<Tile> movedCopy(Vector2D movement) {
+    public ArrayList<Tile> movedCopy(int dx, int dy) {
         ArrayList<Tile> tilesCopy = new ArrayList<Tile>();
 
         for (Tile tile : tiles) {
-            Vector2D positionCopy = new Vector2D(
-                tile.getPosition().getX() + movement.getX(),
-                tile.getPosition().getY() + movement.getY()   
-            );
-
-            tilesCopy.add(new Tile(positionCopy, tile.getSize(), tile.getAsset()));
+            tilesCopy.add(new Tile(
+                tile.getPositionX() + dx, 
+                tile.getPositionY() + dy,
+                tile.getSize(), 
+                tile.getAsset()
+            ));
         }
 
         return tilesCopy;
@@ -85,11 +86,12 @@ public class Level {
     /**
      * Move the level
      * 
-     * @param movement movement in x and y direction
+     * @param dx change in x direction
+     * @param dy change in y direction
      */
-    public void move(Vector2D movement) {
+    public void move(int dx, int dy) {
         for (Tile tile : tiles) {
-            tile.move(movement.getX(), movement.getY());
+            tile.move(dx, dy);
         }
     }
 

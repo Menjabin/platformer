@@ -24,7 +24,7 @@ public interface Controllable {
      * Updates the position of the camera and the player.
      * Checks for collisions between the player and the level tiles
      */
-    public void update();
+    public void tick();
 
     /**
      * Set the game screen to a given value

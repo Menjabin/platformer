@@ -4,14 +4,14 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import com.example.utility.FileLoader;
-import com.example.utility.Vector2D;
 
 public class Entity {
-    protected Vector2D position;
-    protected Vector2D size;
 
     protected BufferedImage image;
     protected Rectangle hitBox;
+
+    protected int positionX, positionY;
+    protected int sizeX, sizeY;
 
     /**
      * Load the corresponding image and update the hitbox
@@ -20,27 +20,31 @@ public class Entity {
      * @param size The width and height of the sprite
      * @param asset The filename of the asset including the file extension
      */
-    public Entity(Vector2D position, Vector2D size, String asset) {
-        this.position = position;
-        this.size = size;
+    public Entity(int positionX, int positionY, int sizeX, int sizeY, String asset) {
+        this.positionX = positionX;
+        this.positionY = positionY;
+
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
 
         // Try loading the image
         image = new FileLoader().loadImage("assets/" + asset);
 
         // Configure the hitbox and the swing boundaries
-        hitBox = new Rectangle(position.getX(), position.getY(), size.getX(), size.getY());
+        hitBox = new Rectangle(positionX, positionY, sizeX, sizeY);
     }
 
     /**
      * Move the entity by x and y units
      * 
-     * @param x Change in x direction
-     * @param y Change in y direction
+     * @param dx Change in x direction
+     * @param dy Change in y direction
      */
-    public void move(int x, int y) {
+    public void move(int dx, int dy) {
         // Translate both the hitbox and the position
-        hitBox.translate(x, y);
-        position.translate(x, y);
+        positionX += dx;
+        positionY += dy;
+        hitBox.translate(dx, dy);
     }
 
     // Getters and setters
@@ -49,16 +53,13 @@ public class Entity {
         return hitBox;
     }
 
-    public Vector2D getPosition() {
-        return position;
-    }
-
     public BufferedImage getImage() {
         return image;
     }
 
-    public void setPosition(Vector2D position) {
-        this.position = position;
+    public void setPosition(int positionX, int positionY) {
+        this.positionX = positionX;
+        this.positionY = positionY;
     }
 
     public void setImage(BufferedImage image) {

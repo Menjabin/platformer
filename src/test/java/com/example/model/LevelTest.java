@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 
 import com.example.model.tile.Tile;
-import com.example.utility.Vector2D;
 
 import org.junit.Test;
 
@@ -18,13 +17,15 @@ public class LevelTest {
         level.generateLevel();
 
         // Create a copy in the same place
-        ArrayList<Tile> tilesCopy = level.movedCopy(new Vector2D(0, 0));
+        ArrayList<Tile> tilesCopy = level.movedCopy(0, 0);
 
-        assertTrue(level.getTiles().get(0).getPosition().equals(tilesCopy.get(0).getPosition()));
+        assertTrue(level.getTiles().get(0).getPositionX() == tilesCopy.get(0).getPositionX());
+        assertTrue(level.getTiles().get(0).getPositionY() == tilesCopy.get(0).getPositionY());
 
-        tilesCopy = level.movedCopy(new Vector2D(10, 10));
+        tilesCopy = level.movedCopy(10, 10);
 
-        assertFalse(level.getTiles().get(0).getPosition().equals(tilesCopy.get(0).getPosition()));
+        assertFalse(level.getTiles().get(0).getPositionX() == tilesCopy.get(0).getPositionX());
+        assertFalse(level.getTiles().get(0).getPositionY() == tilesCopy.get(0).getPositionY());
     }
 
     @Test

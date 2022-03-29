@@ -1,16 +1,14 @@
 package com.example.model.tile;
 
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import com.example.utility.FileLoader;
-import com.example.utility.Vector2D;
 
 public class Tile {
-    Vector2D position;
-    Vector2D size;
-    String asset;
+    private int positionX, positionY;
+    private int size;
+    private String asset;
 
     BufferedImage image;
     Rectangle hitBox;
@@ -21,8 +19,9 @@ public class Tile {
      * @param position The position of this tile
      * @param size The name of the asset file including the file extension
      */
-    public Tile(Vector2D position, Vector2D size, String asset) {
-        this.position = position;
+    public Tile(int positionX, int positionY, int size, String asset) {
+        this.positionX = positionX;
+        this.positionY = positionY;
         this.size = size;
         this.asset = asset;
 
@@ -30,7 +29,7 @@ public class Tile {
         image = new FileLoader().loadImage("assets/" + asset);
 
         // Configure the hitbox and the swing boundaries
-        hitBox = new Rectangle(position.getX(), position.getY(), size.getX(), size.getY());
+        hitBox = new Rectangle(positionX, positionY, size, size);
     }
 
     /**
@@ -41,40 +40,34 @@ public class Tile {
      */
     public void move(int x, int y) {
         // Move the tile and update the hitbox
-        position.translate(x, y);
+        positionX += x;
+        positionY += y;
         hitBox.translate(x, y);
-    }
-
-    /**
-     * Draw the tile
-     * 
-     * @param graphics The graphics to draw the tile on
-     */
-    public void draw(Graphics2D g) {
-        g.drawImage(image, 
-            position.getX(), 
-            position.getY(), 
-            size.getX(), 
-            size.getY(), 
-            null
-        );
     }
 
     // Getters and setters
 
-    public Vector2D getPosition() {
-        return position;
+    public int getPositionX() {
+        return this.positionX;
     }
 
-    public Vector2D getSize() {
-        return size;
+    public int getPositionY() {
+        return this.positionY;
+    }
+
+    public int getSize() {
+        return this.size;
     }
 
     public String getAsset() {
-        return asset;
+        return this.asset;
     }
 
     public Rectangle getHitBox() {
-        return hitBox;
+        return this.hitBox;
+    }
+
+    public BufferedImage getImage() {
+        return this.image;
     }
 }
