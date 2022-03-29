@@ -10,8 +10,8 @@ public class Tile {
     private int size;
     private String asset;
 
-    BufferedImage image;
-    Rectangle hitBox;
+    private BufferedImage image;
+    private Rectangle hitBox;
 
     /**
      * Create the tile sprite
@@ -33,16 +33,16 @@ public class Tile {
     }
 
     /**
-     * Move the tile by x and y
+     * Move the tile by dx and dy
      * 
-     * @param x Change in x direction
-     * @param y Change in y direction
+     * @param dx Change in x direction
+     * @param dy Change in y direction
      */
-    public void move(int x, int y) {
+    public void move(int dx, int dy) {
         // Move the tile and update the hitbox
-        positionX += x;
-        positionY += y;
-        hitBox.translate(x, y);
+        positionX += dx;
+        positionY += dy;
+        hitBox.translate(dx, dy);
     }
 
     // Getters and setters

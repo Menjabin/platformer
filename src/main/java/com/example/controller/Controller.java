@@ -27,7 +27,7 @@ public class Controller implements KeyListener, Runnable {
         this.model = model;
 
         view.addKeyListener(this);
-        model.setGameScreen(GameScreen.MAIN_MENU);
+        model.setGameScreen(GameScreen.ACTIVE_GAME);
     }
 
     /**
@@ -39,14 +39,8 @@ public class Controller implements KeyListener, Runnable {
         gameThread.start();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void keyPressed(KeyEvent e) {
-        int dx = 0;
-
-        // Adjust the movement according to the input
         switch (e.getKeyCode()) {
             // Controls
             case KeyEvent.VK_SPACE:
@@ -54,43 +48,41 @@ public class Controller implements KeyListener, Runnable {
                 break;
             // The left key (left arrow or a) is down
             case KeyEvent.VK_LEFT:
-                dx = -1;
+                model.setKeyLeft(true);
                 break;
             case KeyEvent.VK_A:
-                dx = -1;
+                model.setKeyLeft(true);
                 break;
             // The right key (right arrow or d) is down
             case KeyEvent.VK_RIGHT:
-                dx = 1;
+                model.setKeyRight(true);
                 break;
             case KeyEvent.VK_D:
-                dx = 1;
+                model.setKeyRight(true);
+                break;
+            // Restart the game
+            case KeyEvent.VK_R:
+                model.restart();
                 break;
         }
-
-        model.move(dx, 0);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void keyReleased(KeyEvent e) {
-        // Adjust the movement according to the input
         switch (e.getKeyCode()) {
             // The left key (left arrow or a) is released
             case KeyEvent.VK_LEFT:
-                model.move(0, 0);
+                model.setKeyLeft(false);
                 break;
             case KeyEvent.VK_A:
-                model.move(0, 0);
+                model.setKeyLeft(false);
                 break;
             // The right key (right arrow or d) is released
             case KeyEvent.VK_RIGHT:
-                model.move(0, 0);
+                model.setKeyRight(false);
                 break;
             case KeyEvent.VK_D:
-                model.move(0, 0);
+                model.setKeyRight(false);
                 break;
         }
     }

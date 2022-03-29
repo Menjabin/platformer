@@ -53,11 +53,21 @@ public class Entity {
         return hitBox;
     }
 
+    public int getPositionX() {
+        return this.positionX;
+    }
+
+    public int getPositionY() {
+        return this.positionY;
+    }
+
     public BufferedImage getImage() {
         return image;
     }
 
     public void setPosition(int positionX, int positionY) {
+        this.hitBox.x = positionX;
+        this.hitBox.y = positionY;
         this.positionX = positionX;
         this.positionY = positionY;
     }

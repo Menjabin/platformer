@@ -1,0 +1,16 @@
+Platformer:
+
+Gjøremål:
+
+Fikse kollisjoner sånn at spilleren stopper rett over/ved siden av det han krasjer i.
+Trenger vi virkelig å sjekke to ganger hver loop?
+
+Struktur:
+
+Model - View - Controller
+
+Model skal ha kontroll på spilleren og nivået.
+
+View skal hente spilleren og nivået, og tegne dem på skjermen.
+
+Controller skal hente input og få spilleren til å hoppe og bevege seg.

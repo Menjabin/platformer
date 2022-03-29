@@ -5,15 +5,6 @@ import com.example.model.screen.GameScreen;
 public interface Controllable {
 
     /**
-     * Check which keys are pressed, and move the camera accordingly.
-     * The camera is not actually moved, we just move all the sprites other than the player
-     * 
-     * @param dx change in x direction
-     * @param dy change in y direction
-     */
-    public void move(int dx, int dy);
-
-    /**
      * Makes the player jump
      */
     public void jump();
@@ -25,6 +16,35 @@ public interface Controllable {
      * Checks for collisions between the player and the level tiles
      */
     public void tick();
+
+    /**
+     * Move the player back to its starting position
+     */
+    public void restart();
+
+    /**
+     * Set the keyLeft variable
+     * 
+     * @param keyLeft true if the key is down, false otherwise
+     */
+    public void setKeyLeft(boolean keyLeft);
+
+    /**
+     * Set the keyRight variable
+     * 
+     * @param keyRight true if the key is down, false otherwise
+     */
+    public void setKeyRight(boolean keyRight);
+
+    /**
+     * @return true if the left key is down, false otherwise
+     */
+    public boolean getKeyLeft();
+
+    /**
+     * @return true if the left key is down, false otherwise
+     */
+    public boolean setKeyLeft();
 
     /**
      * Set the game screen to a given value

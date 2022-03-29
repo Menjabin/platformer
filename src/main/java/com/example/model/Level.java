@@ -5,6 +5,10 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import java.awt.Rectangle;
+
+import com.example.model.entity.Direction;
+import com.example.model.entity.Player;
 import com.example.model.tile.Tile;
 import com.example.utility.FileLoader;
 import com.example.view.View;
@@ -63,24 +67,54 @@ public class Level {
     }
 
     /**
-     * Returns a copy of this level where all tiles are moved
      * 
-     * @param movement movement in x and y direction
-     * @return a copy of this level
+     * 
+     * @param rect
+     * @param direction
+     * @return
      */
-    public ArrayList<Tile> movedCopy(int dx, int dy) {
-        ArrayList<Tile> tilesCopy = new ArrayList<Tile>();
-
+    public boolean isCollidingWithRect(Rectangle rect, Direction direction) {
         for (Tile tile : tiles) {
-            tilesCopy.add(new Tile(
-                tile.getPositionX() + dx, 
-                tile.getPositionY() + dy,
-                tile.getSize(), 
-                tile.getAsset()
-            ));
+            Rectangle hitBox = tile.getHitBox();
+
+            if (hitBox != null) {
+                if (rect.intersects(hitBox)) {
+                    // Check if the collision happened in the desired direction
+                    switch (direction) {
+                        case UP:
+                            break;
+                        case RIGHT:
+                            Rectangle rightRect = new Rectangle(
+                                rect.x + rect.width - 3,
+                                rect.y + (Player.HEIGHT) / 8,
+                                1,
+                                rect.height - (Player.HEIGHT) / 4
+                            );
+
+                            if (rightRect.intersects(hitBox)) {
+                                return true;
+                            }
+                            break;
+                        case DOWN:
+                            break;
+                        case LEFT:
+                            Rectangle leftRect = new Rectangle(
+                                rect.x + 3,
+                                rect.y + (Player.HEIGHT) / 8,
+                                1,
+                                rect.height - (Player.HEIGHT) / 4
+                            );
+
+                            if (leftRect.intersects(hitBox)) {
+                                return true;
+                            }
+                            break;
+                    }
+                }
+            }
         }
 
-        return tilesCopy;
+        return false;
     }
 
     /**

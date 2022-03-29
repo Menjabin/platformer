@@ -4,6 +4,8 @@ import java.awt.*;
 import javax.swing.*;
 
 import com.example.model.entity.Player;
+import com.example.model.screen.GameScreen;
+import com.example.model.screen.MainMenu;
 import com.example.model.tile.Tile;
 
 public class View extends JPanel {
@@ -28,6 +30,8 @@ public class View extends JPanel {
 
     int FPS = 60;
     static int scale = Math.min(WIDTH / (MAXSCREENCOL * TILESIZE), HEIGHT / (MAXSCREENROW * TILESIZE));
+
+    MainMenu mainMenu = new MainMenu();
 
     /**
      * Creates a JPanel which is where the game will happen
@@ -69,8 +73,10 @@ public class View extends JPanel {
 
         Graphics2D graphics = (Graphics2D) g;
 
-        drawPlayer(graphics);
-        drawLevel(graphics);
+        if (model.getGameScreen() == GameScreen.ACTIVE_GAME) {
+            drawLevel(graphics);
+            drawPlayer(graphics);
+        }
     }
 
     /**
@@ -82,8 +88,8 @@ public class View extends JPanel {
         Player player = model.getPlayer();
 
         g.drawImage(player.getImage(), 
-            (int) player.getHitBox().getX() * scale, 
-            (int) player.getHitBox().getY() * scale, 
+            player.getPositionX() * scale, 
+            player.getPositionY() * scale, 
             Player.WIDTH * scale, 
             Player.HEIGHT * scale,
             null

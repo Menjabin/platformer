@@ -2,12 +2,13 @@ package com.example.model.screen;
 
 import java.awt.event.MouseEvent;
 
+import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
-public class Screen implements MouseInputListener {
+public class Screen extends JPanel implements MouseInputListener {
     
     public void display() {
-
+        
     }
 
     @Override

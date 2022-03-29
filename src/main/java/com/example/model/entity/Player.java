@@ -11,7 +11,7 @@ public class Player extends Entity {
     public static final int WIDTH = View.TILESIZE;
     public static final int HEIGHT = View.TILESIZE * 2;
 
-    public static final int GRAVITY = 2;
+    public static final int GRAVITY = 1;
 
     private int speed = 10;
 
