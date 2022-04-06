@@ -27,9 +27,6 @@ public class Tile {
 
         // Load the image
         image = new FileLoader().loadImage("assets/" + asset);
-
-        // Configure the hitbox and the swing boundaries
-        hitBox = new Rectangle(positionX, positionY, size, size);
     }
 
     /**
@@ -61,10 +58,6 @@ public class Tile {
 
     public String getAsset() {
         return this.asset;
-    }
-
-    public Rectangle getHitBox() {
-        return this.hitBox;
     }
 
     public BufferedImage getImage() {

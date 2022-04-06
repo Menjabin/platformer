@@ -13,7 +13,7 @@ public class Player extends Entity {
 
     public static final int GRAVITY = 1;
 
-    private int speed = 10;
+    private int speed = 3;
 
     Boolean isFalling;
     private int momentumX, momentumY;
@@ -37,28 +37,41 @@ public class Player extends Entity {
      * Update the player's size, momentum and position
      */
     public void tick(ArrayList<Tile> tiles) {
+        if (isFalling) {
+            momentumY += GRAVITY;
+        }
+
         // Check if moving the player results in a collision
         Rectangle movedHitBox = new Rectangle(
-            hitBox.x + momentumX,
-            hitBox.y + momentumY,
-            hitBox.width + momentumX,
-            hitBox.height + momentumY
+            positionX + momentumX,
+            positionY + momentumY,
+            WIDTH,
+            HEIGHT
         );
 
-        if (isCollidingWithTiles(movedHitBox, tiles)) {
+        // Collision on the x axis
+        if (momentumX < 0 && isCollidingWithTiles(movedHitBox, tiles, Direction.LEFT)) {
+            momentumX = 0;
+        }
+        else if (momentumX > 0 && isCollidingWithTiles(movedHitBox, tiles, Direction.RIGHT)) {
+            momentumX = 0;
+        }
+
+        // We are falling whenever we our feet are not colliding with anything
+        if (momentumY >= 0 && isCollidingWithTiles(movedHitBox, tiles, Direction.DOWN)) {
             isFalling = false;
             momentumY = 0;
-            return;
         }
         else {
             isFalling = true;
         }
 
-        if (isFalling) {
-            momentumY += GRAVITY;
+        // Set the Y momentum to 0 if our head crashes into something
+        if (momentumY < 0 && isCollidingWithTiles(movedHitBox, tiles, Direction.UP)) {
+            momentumY = 0;
         }
 
-        move(momentumX, momentumY);
+        move(momentumX * speed, momentumY);
     }
 
     /**
@@ -67,17 +80,81 @@ public class Player extends Entity {
      */
     public void jump() {
         if (!isFalling) {
-            momentumY = -20;
+            momentumY = -15;
         }
 
         isFalling = true;
     }
 
-    public boolean isCollidingWithTiles(Rectangle rect, ArrayList<Tile> tiles) {
+    /**
+     * 
+     * 
+     * @param rect
+     * @param direction
+     * @return
+     */
+    public boolean isCollidingWithTiles(Rectangle rect, ArrayList<Tile> tiles, Direction direction) {
         for (Tile tile : tiles) {
-            if (tile.getHitBox() != null) {
-                if (rect.intersects(tile.getHitBox())) {
-                    return true;
+            Rectangle hitBox = new Rectangle(
+                tile.getPositionX(),
+                tile.getPositionY(),
+                tile.getSize(),
+                tile.getSize()
+            );
+
+            if (hitBox != null) {
+                if (rect.intersects(hitBox)) {
+                    // Check if the collision happened in the desired direction
+                    switch (direction) {
+                        case UP:
+                            Rectangle topRect = new Rectangle(
+                                rect.x + (WIDTH / 8),
+                                rect.y,
+                                rect.width - (WIDTH / 4),
+                                1
+                            );
+
+                            if (topRect.intersects(hitBox)) {
+                                return true;
+                            }
+                            break;
+                        case RIGHT:
+                            Rectangle rightRect = new Rectangle(
+                                rect.x + rect.width - 1,
+                                rect.y + (HEIGHT / 8),
+                                1,
+                                rect.height - (HEIGHT / 4)
+                            );
+
+                            if (rightRect.intersects(hitBox)) {
+                                return true;
+                            }
+                            break;
+                        case DOWN:
+                            Rectangle bottomRect = new Rectangle(
+                                rect.x + (WIDTH / 8),
+                                rect.y + rect.height - 1,
+                                rect.width - (WIDTH / 8),
+                                1
+                            );
+
+                            if (bottomRect.intersects(hitBox)) {
+                                return true;
+                            }
+                            break;
+                        case LEFT:
+                            Rectangle leftRect = new Rectangle(
+                                rect.x,
+                                rect.y + (HEIGHT / 8),
+                                1,
+                                rect.height - (HEIGHT / 4)
+                            );
+
+                            if (leftRect.intersects(hitBox)) {
+                                return true;
+                            }
+                            break;
+                    }
                 }
             }
         }
@@ -91,8 +168,11 @@ public class Player extends Entity {
         return speed;
     }
 
-    public void setMomentum(int momentumX, int momentumY) {
+    public void setMomentumX(int momentumX) {
         this.momentumX = momentumX;
+    }
+
+    public void setMomentumY(int momentumY) {
         this.momentumY = momentumY;
     }
 }

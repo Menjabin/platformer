@@ -1,9 +1,6 @@
 package com.example.model;
 
-import java.awt.Rectangle;
-
 import com.example.controller.Controllable;
-import com.example.model.entity.Direction;
 import com.example.model.entity.Player;
 import com.example.model.screen.GameScreen;
 import com.example.model.tile.Tile;
@@ -14,7 +11,7 @@ public class Model implements Viewable, Controllable {
     private Player player;
     private Level level;
 
-    private int momentumX, momentumY;
+    private int momentumX;
     private GameScreen gameScreen;
 
     public boolean keyLeft, keyRight;
@@ -23,12 +20,22 @@ public class Model implements Viewable, Controllable {
      * The model is responsible for the game's logic
      */
     public Model() {
+        // Generate the level
+        level = new Level("level1");
+
         // Create the player
         player = new Player(200, 100);
+    }
 
-        // Generate the level
-        level = new Level();
-        level.generateLevel();
+    /**
+     * Creates a model with a given player and level
+     * 
+     * @param player pre-made player
+     * @param level pre-made level
+     */
+    public Model(Player player, Level level) {
+        this.player = player;
+        this.level = level;
     }
 
     @Override
@@ -37,33 +44,24 @@ public class Model implements Viewable, Controllable {
             momentumX = 0;
         }
         else if (keyLeft) {
-            momentumX = -1 * player.getSpeed();
+            momentumX = -1;
         }
         else if (keyRight) {
-            momentumX = 1 * player.getSpeed();
+            momentumX = 1;
         }
         else {
             momentumX = 0;
         }
-
-        Rectangle movedHitBox = new Rectangle(
-            player.getPositionX() + momentumX,
-            player.getPositionY() + momentumY,
-            Player.WIDTH,
-            Player.HEIGHT
-        );
-
-        if (!level.isCollidingWithRect(movedHitBox, Direction.RIGHT) && !level.isCollidingWithRect(movedHitBox, Direction.LEFT)) {
-            level.move(-momentumX, -momentumY);
-        }
         
+        player.setMomentumX(momentumX);
         player.tick(level.getTiles());
     }
 
     @Override
     public void restart() {
         player.setPosition(200, 100);
-        player.setMomentum(0, 0);
+        player.setMomentumX(0);
+        player.setMomentumY(0);
     }
 
     @Override

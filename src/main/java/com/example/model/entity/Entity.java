@@ -1,6 +1,5 @@
 package com.example.model.entity;
 
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import com.example.utility.FileLoader;
@@ -8,7 +7,6 @@ import com.example.utility.FileLoader;
 public class Entity {
 
     protected BufferedImage image;
-    protected Rectangle hitBox;
 
     protected int positionX, positionY;
     protected int sizeX, sizeY;
@@ -29,9 +27,6 @@ public class Entity {
 
         // Try loading the image
         image = new FileLoader().loadImage("assets/" + asset);
-
-        // Configure the hitbox and the swing boundaries
-        hitBox = new Rectangle(positionX, positionY, sizeX, sizeY);
     }
 
     /**
@@ -41,17 +36,11 @@ public class Entity {
      * @param dy Change in y direction
      */
     public void move(int dx, int dy) {
-        // Translate both the hitbox and the position
         positionX += dx;
         positionY += dy;
-        hitBox.translate(dx, dy);
     }
 
     // Getters and setters
-
-    public Rectangle getHitBox() {
-        return hitBox;
-    }
 
     public int getPositionX() {
         return this.positionX;
@@ -66,8 +55,6 @@ public class Entity {
     }
 
     public void setPosition(int positionX, int positionY) {
-        this.hitBox.x = positionX;
-        this.hitBox.y = positionY;
         this.positionX = positionX;
         this.positionY = positionY;
     }

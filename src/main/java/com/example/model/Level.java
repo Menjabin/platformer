@@ -5,27 +5,26 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import java.awt.Rectangle;
-
-import com.example.model.entity.Direction;
-import com.example.model.entity.Player;
+import com.example.grid.Coordinate;
+import com.example.grid.Grid;
 import com.example.model.tile.Tile;
 import com.example.utility.FileLoader;
 import com.example.view.View;
 
 public class Level {
-    // Two dimensional array list for storing the level layout
-    // The first dimension is y-coordinates, and the second dimension is x-coordinates
-    ArrayList<String[]> layout = new ArrayList<String[]>();
-
     // Contains all the sprites belonging to this level
-    ArrayList<Tile> tiles = new ArrayList<Tile>();
+    private ArrayList<Tile> tiles = new ArrayList<Tile>();
+
+    // A grid representing the level
+    private Grid<Integer> tileMap;
 
     /**
      * Read the level file and store the data in the layout array
+     * 
+     * @param levelName the name of the current level file
      */
-    public Level() {
-        File file = new FileLoader().readFile("levels/level1.tmx");
+    public Level(String levelName) {
+        File file = new FileLoader().readFile("levels/" + levelName + ".tmx");
 
         try {
             Scanner sc = new Scanner(file);
@@ -35,86 +34,54 @@ public class Level {
                 sc.nextLine();
             }
 
-            for (int i = 0; i < View.MAXSCREENROW; i++) {
-                layout.add(sc.nextLine().split(","));
+            // Read the file
+            ArrayList<String[]> lines = new ArrayList<String[]>();
+
+            while (sc.hasNext()) {
+                String nextLine = sc.nextLine();
+                if (nextLine.startsWith("0") || nextLine.startsWith("1")) {
+                    lines.add(nextLine.split(","));
+                }
+            }
+
+            sc.close();
+
+            // Populate the grid with numbers corresponding to tiles
+            tileMap = new Grid<Integer>(lines.size(), lines.get(0).length);
+
+            for (int i = 0; i < tileMap.getRows(); i++) {
+                for (int j = 0; j < tileMap.getCols(); j++) {
+                    tileMap.set(new Coordinate(i, j), Integer.parseInt(lines.get(i)[j]));
+                }
             }
 
             sc.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+        generateLevel();
     }
 
     /**
-     * Generate all the tiles which will populate the level.
-     * Loops through the two dimensional array "layout", and generates the appropriate tiles
+     * Generates all the tiles which will populate the level.
+     * Loops through the grid and generates the appropriate tiles
      */
-    public void generateLevel() {
+    private void generateLevel() {
         int tileSize = View.TILESIZE;
 
-        for (int y = 0; y < layout.size(); y++) {
-            String[] row = layout.get(y);
-            for (int x = 0; x < row.length; x++) {
+        for (int x = 0; x < tileMap.getCols(); x++) {
+            for (int y = 0; y < tileMap.getRows(); y++) {
+                int tile = tileMap.get(new Coordinate(y, x));
                 // Add the corresponding tiles to the grid
-                if (row[x].equals("1")) {
+                if (tile == 1) {
                     tiles.add(new Tile(x * tileSize, y * tileSize, tileSize, "grass.png"));
                 }
-                if (row[x].equals("2")) {
+                if (tile == 2) {
                     System.out.println("test");
                 }
             }
         }
-    }
-
-    /**
-     * 
-     * 
-     * @param rect
-     * @param direction
-     * @return
-     */
-    public boolean isCollidingWithRect(Rectangle rect, Direction direction) {
-        for (Tile tile : tiles) {
-            Rectangle hitBox = tile.getHitBox();
-
-            if (hitBox != null) {
-                if (rect.intersects(hitBox)) {
-                    // Check if the collision happened in the desired direction
-                    switch (direction) {
-                        case UP:
-                            break;
-                        case RIGHT:
-                            Rectangle rightRect = new Rectangle(
-                                rect.x + rect.width - 3,
-                                rect.y + (Player.HEIGHT) / 8,
-                                1,
-                                rect.height - (Player.HEIGHT) / 4
-                            );
-
-                            if (rightRect.intersects(hitBox)) {
-                                return true;
-                            }
-                            break;
-                        case DOWN:
-                            break;
-                        case LEFT:
-                            Rectangle leftRect = new Rectangle(
-                                rect.x + 3,
-                                rect.y + (Player.HEIGHT) / 8,
-                                1,
-                                rect.height - (Player.HEIGHT) / 4
-                            );
-
-                            if (leftRect.intersects(hitBox)) {
-                                return true;
-                            }
-                            break;
-                    }
-                }
-            }
-        }
-
-        return false;
     }
 
     /**
@@ -131,7 +98,17 @@ public class Level {
 
     // Getters and setters
 
+    /**
+     * @return the tiles of this level. Does not contain empty tiles
+     */
     public ArrayList<Tile> getTiles() {
-        return tiles;
+        return this.tiles;
+    }
+
+    /**
+     * @return a grid representing the tile map of this level
+     */
+    public Grid<Integer> getTileMap() {
+        return this.tileMap;
     }
 }
