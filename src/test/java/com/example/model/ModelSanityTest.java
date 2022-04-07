@@ -2,6 +2,7 @@ package com.example.model;
 
 import static org.junit.Assert.assertEquals;
 
+import com.example.grid.Coordinate;
 import com.example.model.entity.Player;
 import com.example.view.View;
 
@@ -17,11 +18,11 @@ public class ModelSanityTest {
     @Test
     public void testMovement() {
         // Try moving the player to the left
-        int prevPosX = level.getTiles().get(0).getPositionX();
+        int prevPosX = level.getTiles().get(new Coordinate(0, 0)).getPositionX();
 
         //model.setKeyLeft(true);
         //model.tick();
 
-        assertEquals(prevPosX, level.getTiles().get(0).getPositionX());
+        assertEquals(prevPosX, level.getTiles().get(new Coordinate(0, 0)).getPositionX());
     }
 }

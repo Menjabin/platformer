@@ -50,9 +50,6 @@ public class Grid<E> implements IGrid<E> {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Iterator<CoordinateItem<E>> iterator() {
         ArrayList<CoordinateItem<E>> gridElements = new ArrayList<CoordinateItem<E>>();
@@ -67,33 +64,21 @@ public class Grid<E> implements IGrid<E> {
         return gridElements.iterator();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getRows() {
         return this.rows;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getCols() {
         return this.cols;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void set(Coordinate coordinate, E value) {
         grid.set(coordinate.row * cols + coordinate.col, value);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public E get(Coordinate coordinate) {
         try {
@@ -103,9 +88,6 @@ public class Grid<E> implements IGrid<E> {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean coordinateIsOnGrid(Coordinate coordinate) {
         if (0 <= coordinate.row && coordinate.row < this.rows) {

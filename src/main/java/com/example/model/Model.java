@@ -1,6 +1,7 @@
 package com.example.model;
 
 import com.example.controller.Controllable;
+import com.example.grid.Grid;
 import com.example.model.entity.Player;
 import com.example.model.screen.GameScreen;
 import com.example.model.tile.Tile;
@@ -72,7 +73,7 @@ public class Model implements Viewable, Controllable {
     // Getters and setters
 
     @Override
-    public Iterable<Tile> getTiles() {
+    public Grid<Tile> getTiles() {
         return this.level.getTiles();
     }
 

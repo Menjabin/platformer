@@ -6,14 +6,15 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.example.grid.Coordinate;
+import com.example.grid.CoordinateItem;
 import com.example.grid.Grid;
 import com.example.model.tile.Tile;
 import com.example.utility.FileLoader;
 import com.example.view.View;
 
 public class Level {
-    // Contains all the sprites belonging to this level
-    private ArrayList<Tile> tiles = new ArrayList<Tile>();
+    // Contains all the tiles belonging to this level, including empty ones
+    private Grid<Tile> tiles;
 
     // A grid representing the level
     private Grid<Integer> tileMap;
@@ -69,17 +70,22 @@ public class Level {
      */
     private void generateLevel() {
         int tileSize = View.TILESIZE;
+        tiles = new Grid<Tile>(tileMap.getRows(), tileMap.getCols());
 
         for (int x = 0; x < tileMap.getCols(); x++) {
             for (int y = 0; y < tileMap.getRows(); y++) {
-                int tile = tileMap.get(new Coordinate(y, x));
+                int tileType = tileMap.get(new Coordinate(y, x));
+                Tile tile = null;
+
                 // Add the corresponding tiles to the grid
-                if (tile == 1) {
-                    tiles.add(new Tile(x * tileSize, y * tileSize, tileSize, "grass.png"));
+                if (tileType == 1) {
+                    tile = new Tile(x * tileSize, y * tileSize, tileSize, "grass.png");
                 }
-                if (tile == 2) {
+                if (tileType == 2) {
                     System.out.println("test");
                 }
+
+                tiles.set(new Coordinate(y, x), tile);
             }
         }
     }
@@ -91,17 +97,17 @@ public class Level {
      * @param dy change in y direction
      */
     public void move(int dx, int dy) {
-        for (Tile tile : tiles) {
-            tile.move(dx, dy);
+        for (CoordinateItem<Tile> tile : tiles) {
+            tile.item.move(dx, dy);
         }
     }
 
     // Getters and setters
 
     /**
-     * @return the tiles of this level. Does not contain empty tiles
+     * @return the tiles of this level
      */
-    public ArrayList<Tile> getTiles() {
+    public Grid<Tile> getTiles() {
         return this.tiles;
     }
 

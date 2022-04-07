@@ -3,6 +3,7 @@ package com.example.view;
 import java.awt.*;
 import javax.swing.*;
 
+import com.example.grid.CoordinateItem;
 import com.example.model.entity.Player;
 import com.example.model.screen.GameScreen;
 import com.example.model.screen.MainMenu;
@@ -102,14 +103,18 @@ public class View extends JPanel {
      * @param g the graphics object to draw with
      */
     public void drawLevel(Graphics2D g) {
-        for (Tile tile : model.getTiles()) {
-            g.drawImage(tile.getImage(), 
-                tile.getPositionX() * scale,
-                tile.getPositionY() * scale,
-                tile.getSize() * scale,
-                tile.getSize() * scale,
-                null
-            );
+        for (CoordinateItem<Tile> tileItem : model.getTiles()) {
+            Tile tile = tileItem.item;
+
+            if (tile != null) {
+                g.drawImage(tile.getImage(), 
+                    tile.getPositionX() * scale,
+                    tile.getPositionY() * scale,
+                    tile.getSize() * scale,
+                    tile.getSize() * scale,
+                    null
+                );
+            }
         }
     }
 

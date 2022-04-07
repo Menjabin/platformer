@@ -1,8 +1,9 @@
 package com.example.model.entity;
 
 import java.awt.Rectangle;
-import java.util.ArrayList;
 
+import com.example.grid.CoordinateItem;
+import com.example.grid.Grid;
 import com.example.model.tile.Tile;
 import com.example.view.View;
 
@@ -34,17 +35,16 @@ public class Player extends Entity {
     }
 
     /**
-     * Update the player's size, momentum and position
+     * Update the player's momentum and position
      */
-    public void tick(ArrayList<Tile> tiles) {
+    public void tick(Grid<Tile> tiles) {
         if (isFalling) {
             momentumY += GRAVITY;
         }
 
-        // Check if moving the player results in a collision
         Rectangle movedHitBox = new Rectangle(
-            positionX + momentumX,
-            positionY + momentumY,
+            positionX + (momentumX * speed),
+            positionY + (momentumY),
             WIDTH,
             HEIGHT
         );
@@ -57,19 +57,33 @@ public class Player extends Entity {
             momentumX = 0;
         }
 
-        // We are falling whenever we our feet are not colliding with anything
-        if (momentumY >= 0 && isCollidingWithTiles(movedHitBox, tiles, Direction.DOWN)) {
-            isFalling = false;
-            momentumY = 0;
+        if (isFalling) {
+            if (isCollidingWithTiles(movedHitBox, tiles, Direction.DOWN)) {
+                isFalling = false;
+                momentumY = 0;
+            }
+            else {
+
+            }
         }
         else {
-            isFalling = true;
+            Rectangle newHitBox = new Rectangle(
+                positionX + (momentumX * speed),
+                positionY + 1,
+                WIDTH,
+                HEIGHT
+            );
+
+            if (!isCollidingWithTiles(newHitBox, tiles, Direction.DOWN)) {
+                isFalling = true;
+            }
         }
 
         // Set the Y momentum to 0 if our head crashes into something
         if (momentumY < 0 && isCollidingWithTiles(movedHitBox, tiles, Direction.UP)) {
             momentumY = 0;
         }
+        
 
         move(momentumX * speed, momentumY);
     }
@@ -87,22 +101,26 @@ public class Player extends Entity {
     }
 
     /**
+     * Take in a rectangle and a grid of tiles, and check if the rectangle collides with any
+     * tiles in a given direction
      * 
-     * 
-     * @param rect
-     * @param direction
-     * @return
+     * @param rect the rectangle to test collision for
+     * @param tiles the tiles to collide with
+     * @param direction the direction of collision
+     * @return true if colliding, false if not
      */
-    public boolean isCollidingWithTiles(Rectangle rect, ArrayList<Tile> tiles, Direction direction) {
-        for (Tile tile : tiles) {
-            Rectangle hitBox = new Rectangle(
-                tile.getPositionX(),
-                tile.getPositionY(),
-                tile.getSize(),
-                tile.getSize()
-            );
+    public boolean isCollidingWithTiles(Rectangle rect, Grid<Tile> tiles, Direction direction) {
+        for (CoordinateItem<Tile> tileItem : tiles) {
+            Tile tile = tileItem.item;
 
-            if (hitBox != null) {
+            if (tile != null) {
+                Rectangle hitBox = new Rectangle(
+                    tile.getPositionX(),
+                    tile.getPositionY(),
+                    tile.getSize(),
+                    tile.getSize()
+                );
+
                 if (rect.intersects(hitBox)) {
                     // Check if the collision happened in the desired direction
                     switch (direction) {
